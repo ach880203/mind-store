@@ -1,0 +1,154 @@
+/* ================================
+   Mind Diary – BASE (절대 기준)
+   ================================ */
+
+/* 공통 레이아웃 */
+.mind-diary {
+  --blur-strong: blur(18px);
+  --blur-soft: blur(10px);
+
+  --bg-dark: rgba(15, 12, 10, 0.65);
+  --bg-card: rgba(0, 0, 0, 0.45);
+  --bg-soft: rgba(255, 255, 255, 0.06);
+
+  --border-soft: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.22);
+
+  --radius-xl: 28px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+
+  color: rgba(255, 255, 255, 0.94);
+}
+
+/* ================================
+   버튼
+   ================================ */
+.diary-btn {
+  padding: 12px 30px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+
+  background: #fff;
+  color: #000;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.diary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+.diary-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.diary-btn.danger {
+  background: transparent;
+  color: #ff7a7a;
+}
+
+/* ================================
+   모달 공통
+   ================================ */
+.diary-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1100;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.diary-modal {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow: hidden;
+}
+
+
+/* 닫기 버튼 */
+.modal-close,
+.diary-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  font-size: 22px;
+  cursor: pointer;
+
+  transition: color 0.2s ease;
+}
+
+.modal-close:hover,
+.diary-close:hover {
+  color: #fff;
+}
+
+/* ================================
+   감정 색상 (전역 Accent)
+   ================================ */
+.emotion-매우아픔 {
+  --accent: #ff5a5a;
+}
+
+.emotion-아픔 {
+  --accent: #ff9f43;
+}
+
+.emotion-보통 {
+  --accent: #2ecc71;
+}
+
+.emotion-행복 {
+  --accent: #4aa3ff;
+}
+
+.emotion-매우행복 {
+  --accent: #ff7eb6;
+}
+
+/* 카드 & 디테일 공통 accent */
+.diary-card,
+.diary-detail {
+  border-top: 6px solid var(--accent);
+}
+
+/* ================================
+   텍스트 기본 톤
+   ================================ */
+.muted {
+  color: rgba(255,255,255,0.65);
+  font-size: 13px;
+}
+
+/* ================================
+   부드러운 등장
+   ================================ */
+.fade-in {
+  animation: fadeIn 0.25s ease-out both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

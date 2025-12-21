@@ -1,0 +1,309 @@
+/* ================================
+   Mind Diary – WRITE (1:1 매칭)
+   ================================ */
+
+.diary-write {
+  width: min(760px, 92vw);
+  margin: 0 auto;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  padding: 22px 18px 18px;
+  border-radius: 22px;
+
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 24px 70px rgba(0,0,0,0.45);
+
+  /* ✅ 핵심: 바깥(페이지)이 아니라, 이 카드가 높이를 관리 */
+  max-height: min(86vh, 820px);
+  overflow: hidden;
+
+  /* 가로 스크롤 방지 */
+  box-sizing: border-box;
+}
+
+.diary-write-header {
+  text-align: center;
+  padding: 4px 6px 0;
+}
+
+.diary-write-title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: rgba(255,255,255,0.94);
+  margin: 0;
+}
+
+.diary-write-subtitle {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: rgba(255,255,255,0.72);
+}
+
+.diary-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.35);
+  color: rgba(255,255,255,0.85);
+
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.diary-close:hover {
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.08);
+}
+
+/* ================================
+   감정 선택
+   ================================ */
+
+.emotion-section {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  padding: 4px 4px 0;
+}
+
+@media (max-width: 760px) {
+  .emotion-section {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.emotion-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  padding: 12px 10px;
+  border-radius: 18px;
+
+  background: rgba(0,0,0,0.30);
+  border: 1px solid rgba(255,255,255,0.12);
+
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.emotion-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.06);
+}
+
+.emotion-btn.active {
+  background: rgba(255,255,255,0.92);
+  border-color: transparent;
+}
+
+.emotion-img {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+}
+
+.emotion-img img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  display: block;
+}
+
+.emotion-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.78);
+}
+
+.emotion-btn.active .emotion-label {
+  color: #111;
+  font-weight: 700;
+}
+
+/* ================================
+   작성 폼 (여기만 스크롤)
+   ================================ */
+
+.diary-form {
+  /* ✅ 핵심: 길어지면 이 섹션이 스크롤 */
+  overflow: auto;
+  padding: 6px 4px 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+/* 스크롤바 숨김 */
+.diary-form::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+.diary-form {
+  scrollbar-width: none;
+}
+
+.field label {
+  display: block;
+  font-size: 13px;
+  color: rgba(255,255,255,0.70);
+  margin: 0 0 8px;
+}
+
+.field textarea {
+  width: 100%;
+  min-height: 92px;
+  resize: none;
+
+  border-radius: 18px;
+  padding: 16px 16px;
+
+  background: rgba(0,0,0,0.33);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.92);
+
+  font-size: 14px;
+  line-height: 1.7;
+  font-family: inherit;
+
+  outline: none;
+  box-sizing: border-box;
+}
+
+.field textarea::placeholder {
+  color: rgba(255,255,255,0.38);
+}
+
+.field textarea:focus {
+  border-color: rgba(255,255,255,0.35);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.10);
+}
+
+/* textarea 내부 스크롤 숨김 */
+.field textarea::-webkit-scrollbar {
+  display: none;
+}
+.field textarea {
+  scrollbar-width: none;
+}
+
+/* 비밀번호 */
+.pw-input {
+  width: 100%;
+  height: 46px;
+  border-radius: 14px;
+  padding: 0 14px;
+
+  background: rgba(0,0,0,0.33);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.92);
+
+  outline: none;
+  box-sizing: border-box;
+}
+
+.pw-input::placeholder {
+  color: rgba(255,255,255,0.38);
+}
+
+.pw-input:focus {
+  border-color: rgba(255,255,255,0.35);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.10);
+}
+
+.pw-hint {
+  margin: 8px 2px 0;
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+}
+
+/* ================================
+   버튼 영역
+   ================================ */
+
+.diary-write-footer {
+  padding: 10px 4px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.diary-btn.primary {
+  padding: 12px 26px;
+  border-radius: 999px;
+
+  border: none;
+  cursor: pointer;
+
+  background: rgba(255,255,255,0.94);
+  color: #121212;
+
+  font-weight: 800;
+  font-size: 14px;
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.diary-btn.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 35px rgba(0,0,0,0.42);
+}
+
+/* ================================
+   (선택) 감정별 분위기 살짝
+   ================================ */
+
+.diary-write.emotion-매우아픔 { border-color: rgba(255,90,90,0.22); }
+.diary-write.emotion-아픔     { border-color: rgba(255,170,60,0.22); }
+.diary-write.emotion-보통     { border-color: rgba(170,255,120,0.18); }
+.diary-write.emotion-행복     { border-color: rgba(120,190,255,0.18); }
+.diary-write.emotion-매우행복 { border-color: rgba(255,150,210,0.18); }
+
+/* ================================
+   비밀번호 입력
+   ================================ */
+
+.pw-input {
+  width: 100%;
+  height: 46px;
+  border-radius: 14px;
+  padding: 0 14px;
+
+  background: rgba(0,0,0,0.33);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.92);
+
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.pw-input::placeholder {
+  color: rgba(255,255,255,0.38);
+}
+
+.pw-input:focus {
+  border-color: rgba(255,255,255,0.35);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.10);
+}
+
+.pw-hint {
+  margin: 8px 2px 0;
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+}

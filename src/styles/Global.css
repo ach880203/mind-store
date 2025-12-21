@@ -1,0 +1,71 @@
+/* =========================
+GLOBAL BASE */
+:root {
+  /* layout */
+  --page-max-width: 1180px;
+  --header-height: clamp(56px, 8vw, 75px);
+
+  /* color */
+  --accent: #9fd3c7;
+  --text-main: rgba(255,255,255,0.94);
+  --text-soft: rgba(255,255,255,0.78);
+
+  /* card */
+  --bg-card: rgba(0,0,0,0.34);
+  --bg-card-strong: rgba(0,0,0,0.46);
+  --border: rgba(255,255,255,0.14);
+  --border-strong: rgba(255,255,255,0.22);
+
+  --radius-lg: 24px;
+  --radius-md: 16px;
+}
+
+/* reset-ish */
+html, body, #root {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  -ms-overflow-style: none;   /* IE */
+  scrollbar-width: none;      /* Firefox */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+#root::-webkit-scrollbar {
+  display: none;              /* Chrome, Safari */
+}
+
+body {
+  margin: 0;
+  background-image: url("../../public/img/background_6.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  font-family: "dobi", system-ui, sans-serif;
+  color: #fff;
+  overflow-x: hidden;
+
+  -ms-overflow-style: none;   /* IE */
+  scrollbar-width: none;      /* Firefox */
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(80, 70, 57, 0.25);
+  z-index: -1;
+}
+
+body::-webkit-scrollbar {
+  display: none;              /* Chrome, Safari */
+}
+
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+  }
+}

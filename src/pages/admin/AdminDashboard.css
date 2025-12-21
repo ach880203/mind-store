@@ -1,0 +1,94 @@
+/* KPI grid 확장 */
+.dashboard-grid.four {
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 14px;
+}
+
+/* 섹션 타이틀 */
+.dash-section-title {
+  margin: 28px 4px 12px;
+  font-size: 15px;
+  opacity: 0.85;
+}
+
+/* 예약 상태 카드 */
+.status-card.대기 {
+  background: rgba(255,193,7,0.18);
+}
+.status-card.확정 {
+  background: rgba(159,211,199,0.22);
+}
+.status-card.완료 {
+  background: rgba(200,200,200,0.18);
+}
+.status-card.취소 {
+  background: rgba(247,11,11,0.18);
+}
+
+/* 주문 차트 */
+.chart-card {
+  margin-top: 10px;
+}
+
+.chart-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 40px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.status-label {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.bar-wrap {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.12);
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.bar-value {
+  text-align: right;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* 상태 색상 */
+.bar.결제완료 { background: rgba(159,211,199,0.8); }
+.bar.배송준비중 { background: rgba(200,200,200,0.7); }
+.bar.배송중 { background: rgba(120,200,160,0.8); }
+.bar.배송완료 { background: rgba(90,180,140,0.9); }
+.bar.취소 { background: rgba(247,11,11,0.7); }
+
+.dash-card {
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.dash-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 55px rgba(0,0,0,0.45);
+}
+
+.dash-card::after {
+  content: "→ 이동";
+  position: absolute;
+  bottom: 14px;
+  right: 18px;
+  font-size: 11px;
+  opacity: 0;
+  transition: opacity .15s ease;
+}
+
+.dash-card:hover::after {
+  opacity: 0.6;
+}

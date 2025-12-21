@@ -1,0 +1,270 @@
+/* CounselingReservation.css - 리팩토링 최종본 */
+
+.counseling-page .reservation-panel{
+  position: fixed;
+  top: 120px;
+  right: 24px;
+
+  width: clamp(320px, 34vw, 520px);
+  
+  height: auto;
+  max-height: 70vh;
+
+  background: rgba(42, 41, 41, 0.45);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 24px;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+
+  padding: 24px;
+  z-index: 40;
+
+  overflow-y: auto;
+  .reservation-panel {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.45) transparent;
+}
+}
+
+/* 패널 닫기 버튼(추천: JSX에 button.panel-close 추가) */
+.panel-close{
+  position: absolute;
+  top: 14px;
+  right: 14px;
+
+  width: 32px;     /* 🔽 크기 줄임 */
+  height: 32px;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.16);
+  color: rgba(255,255,255,0.92);
+
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+
+
+.panel-close:hover{
+  transform: scale(1.04);
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(255,255,255,0.24);
+}
+
+.reservation{
+  color: rgba(255,255,255,0.94);
+}
+
+.reservation h1{
+  margin: 4px 0 14px;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+}
+
+/* 선택 상품 카드 */
+.selected-counseling{
+  margin-bottom: 16px;
+  padding: 14px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.08);
+}
+
+.selected-counseling h2{
+  font-size: 25px;
+  font-weight: 600;
+  opacity: 0.8;
+  margin: 6px;
+}
+
+.selected-counseling p{
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 600;
+  opacity: 0.92;
+}
+
+/* 레이아웃 */
+.reservation-container{
+  display: grid;
+  gap: 14px;
+}
+
+.calendar h2,
+.time-slots h2{
+  font-size: 24px;
+  font-weight: 600;
+  opacity: 0.86;
+}
+
+/* 날짜 그리드 */
+.calendar-grid{
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.date-btn{
+  padding: 12px 10px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.90);
+  cursor: pointer;
+  transition: transform .15s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
+}
+
+.date-btn:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.22);
+}
+
+.date-btn:focus-visible{
+  outline: 2px solid rgba(255,255,255,0.20);
+  outline-offset: 2px;
+}
+
+/* 날짜 선택 표시(원하면 JSX에서 className="date-btn active"로 확장 가능) */
+.selected-date{
+  margin-top: 8px;
+  font-size: 22px;
+  font-weight: 600;
+  opacity: 0.86;
+}
+
+/* 시간 버튼 */
+.time-slots{
+  margin-top: 6px;
+}
+
+.guide{
+  opacity: 0.7;
+  font-size: 22px;
+  margin: 8px 0 0;
+}
+
+.time-btn{
+  margin: 6px 12px 0 0;
+  padding: 12px 16px;
+  border-radius: 999px;
+  
+  font-size: 15px;
+  font-weight: 500;
+
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.90);
+
+  cursor: pointer;
+  opacity: 0.72;
+  transition: opacity .15s ease, transform .15s ease, background .15s ease, border-color .15s ease;
+}
+
+.time-btn:hover{
+  opacity: 0.92;
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.22);
+}
+
+.time-btn.active{
+  opacity: 1;
+  background: var(--accent);
+  border-color: rgba(255,255,255,0.28);
+}
+
+/* 예약 확정 버튼 */
+.confirm-btn{
+  margin-top: 14px;
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.92);
+  color: rgba(26, 26, 26, 0.86);
+
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  background: var(--accent);
+
+  transition: transform .2s ease, filter .2s ease, opacity .2s ease;
+}
+
+.confirm-btn:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.02);
+}
+
+.confirm-btn:disabled{
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  filter: none;
+}
+
+/* 완료 화면 */
+.complete{
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+  gap: 10px;
+}
+
+.complete h1{
+  font-size: 40px;
+  margin: 0;
+}
+
+.complete p{
+  font-size: 35px;
+  margin: 0;
+  opacity: 0.86;
+}
+
+/* 모바일: 예약 패널도 풀스크린 느낌으로 */
+@media (max-width: 860px){
+  .reservation-panel{
+    left: 12px;
+    right: 12px;
+    width: auto;
+    top: 86px;
+    height: calc(100vh - 110px);
+  }
+}
+
+/* =========================
+   Minimal Scrollbar (Thumb only)
+========================= */
+
+/* 스크롤바 영역 */
+.reservation-panel::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* 트랙 완전 투명 */
+.reservation-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 스크롤바 바(thumb) */
+.reservation-panel::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: relative;
+}
+
+/* hover 시만 살짝 강조 */
+.reservation-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+

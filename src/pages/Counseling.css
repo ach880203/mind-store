@@ -1,0 +1,213 @@
+/* Counseling.css - 리팩토링 최종본 */
+
+:root{
+  --bg-card: rgba(0,0,0,0.34);
+  --bg-card-strong: rgba(0,0,0,0.46);
+  --border: rgba(255,255,255,0.14);
+  --border-strong: rgba(255,255,255,0.22);
+  --text: rgba(255,255,255,0.94);
+  --text-soft: rgba(255,255,255,0.78);
+  --shadow: 0 24px 60px rgba(31, 31, 31, 0.35);
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --accent: #9fd3c7;
+}
+
+.counseling{
+  color: var(--text);
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 20px 64px;
+}
+
+.counseling h1{
+  font-size: clamp(22px, 2.3vw, 32px);
+  letter-spacing: -0.02em;
+  margin: 8px 0 18px;
+}
+
+/* ✅ 리스트가 “패널 열리면 자동으로 공간을 비워서”
+   겹침/클릭 충돌이 원천 차단됨 */
+.counseling.has-detail{
+  padding-left: clamp(16px, 3vw, 40px);
+}
+.counseling.has-reserve{
+  padding-right: clamp(16px, 3vw, 40px);
+}
+
+/* 디테일 패널이 실제로 보일 때만 */
+.counseling.has-detail:not(.has-reserve) .counseling-list{
+  margin-left: clamp(320px, 36vw, 520px);
+}
+/* 예약 패널이 보일 때만 */
+.counseling.has-reserve .counseling-list{
+  margin-right: clamp(320px, 34vw, 520px);
+}
+
+.counseling-list{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+  transition: margin 0.35s ease;
+}
+
+/* 카드 */
+.counseling-card{
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 18px 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease, opacity .2s ease, filter .2s ease;
+  pointer-events: auto; /* 절대 none 금지 */
+  animation: card-fade-up 0.6s ease forwards;
+  opacity: 0;
+}
+
+.counseling-card:hover{
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  background: rgba(43, 43, 43, 0.45);
+}
+
+.counseling-card:focus-within{
+  outline: 2px solid rgba(255,255,255,0.18);
+  outline-offset: 2px;
+}
+
+.counseling-card h2{
+  font-size: 18px;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+
+.counseling-card p{
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+.counseling-card .price{
+  margin-top: 12px;
+  color: var(--text);
+  opacity: 0.92;
+  font-weight: 600;
+}
+
+/* dimmed = 흐리게 + 클릭 막기 */
+.counseling-card.dimmed{
+  opacity: 0.28;
+  filter: blur(1.5px);
+  transform: scale(0.98);
+  pointer-events: none; /* ✅ 여기만 */
+}
+
+/* 자세히 보기 버튼: “투박함” 제거, 링크 느낌 말고 UI 느낌 */
+.detail-btn{
+  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: rgba(255,255,255,0.86);
+
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 999px;
+  padding: 10px 14px;
+
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
+}
+
+.detail-btn::after{
+  content: "→";
+  transition: transform .2s ease;
+  opacity: .9;
+}
+
+.detail-btn:hover{
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(255,255,255,0.24);
+  transform: translateY(-1px);
+}
+.detail-btn:hover::after{
+  transform: translateX(3px);
+}
+
+.detail-btn:active{
+  transform: translateY(0px);
+  opacity: 0.95;
+}
+
+.detail-btn:focus-visible{
+  outline: 2px solid rgba(255,255,255,0.20);
+  outline-offset: 2px;
+}
+
+/* 디테일 패널(왼쪽) 컨테이너 */
+.detail-card{
+  position: fixed;
+  top: 120px;
+  left: 24px;
+
+  width: clamp(320px, 34vw, 480px);
+
+  /* 🔥 핵심 */
+  height: auto;
+  max-height: 70vh;
+
+  background: var(--bg-card-strong);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow);
+
+  padding: 24px;
+  z-index: 30;
+
+  overflow-y: auto;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(22, 22, 22, 0.35);
+  backdrop-filter: blur(2px);
+  z-index: 5;
+}
+
+/* 모바일에서는 패널이 전체로 */
+@media (max-width: 860px){
+  .counseling.has-detail .counseling-list,
+  .counseling.has-reserve .counseling-list{
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .detail-card{
+    left: 12px;
+    right: 12px;
+    width: auto;
+    top: 86px;
+    height: calc(100vh - 110px);
+  }
+}
+
+@keyframes card-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

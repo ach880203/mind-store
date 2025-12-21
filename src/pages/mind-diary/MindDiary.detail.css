@@ -1,0 +1,222 @@
+/* ================================
+   Mind Diary – DETAIL
+   ================================ */
+
+.diary-detail {
+  width: min(820px, 92vw);
+  margin: 0 auto;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+
+  padding: 28px 26px 32px;
+
+  background: rgba(0, 0, 0, 0.70);
+  backdrop-filter: blur(25px);
+
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+
+  max-height: 88vh;
+  overflow: hidden;
+}
+
+/* ================================
+   헤더
+   ================================ */
+
+.diary-detail-header {
+  text-align: center;
+}
+
+.diary-detail-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.diary-detail-header .diary-date {
+  margin-top: 8px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+}
+
+/* ================================
+   본문 (읽기 영역)
+   ================================ */
+
+.diary-detail-body {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 6px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* 스크롤바 숨김 */
+.diary-detail-body::-webkit-scrollbar {
+  width: 0;
+}
+.diary-detail-body {
+  scrollbar-width: none;
+}
+
+/* 섹션 */
+.diary-detail-body h4 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.75);
+}
+
+.diary-detail-body p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.92);
+
+  white-space: pre-wrap;
+}
+
+/* ================================
+   댓글 영역
+   ================================ */
+
+.diary-comments {
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 18px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.diary-comments h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+}
+
+/* 댓글 리스트 */
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 말풍선 */
+.comment-bubble {
+  max-width: 80%;
+  padding: 12px 14px;
+  border-radius: 16px;
+
+  font-size: 14px;
+  line-height: 1.6;
+
+  background: rgba(255,255,255,0.12);
+}
+
+/* 사용자 / 관리자 구분 */
+.comment-bubble.user {
+  align-self: flex-end;
+  background: rgba(255,255,255,0.22);
+  color: #000;
+}
+
+.comment-bubble.admin {
+  align-self: flex-start;
+  background: rgba(0,0,0,0.45);
+  color: rgba(255,255,255,0.9);
+}
+
+/* 시간 */
+.comment-bubble span {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+/* ================================
+   댓글 입력
+   ================================ */
+
+.comment-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.comment-form select {
+  height: 40px;
+  border-radius: 10px;
+  padding: 0 8px;
+
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: #fff;
+}
+
+.comment-form input {
+  flex: 1;
+  height: 40px;
+  border-radius: 12px;
+  padding: 0 14px;
+
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: #fff;
+
+  outline: none;
+}
+
+.comment-form input::placeholder {
+  color: rgba(255,255,255,0.45);
+}
+
+.comment-form button {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+
+  border: none;
+  cursor: pointer;
+
+  background: rgba(255,255,255,0.9);
+  color: #000;
+  font-weight: 600;
+}
+
+/* ================================
+   하단 버튼
+   ================================ */
+
+.diary-detail-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.diary-detail-footer .diary-btn {
+  padding: 10px 20px;
+}
+
+.diary-detail-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.diary-author-name {
+  font-size: 13px;
+  opacity: 0.7;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.15);
+}
