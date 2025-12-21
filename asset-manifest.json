@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/mind-store/static/css/main.0314d706.css",
+    "main.js": "/mind-store/static/js/main.a45dcaa1.js",
+    "static/js/453.a1ed45fd.chunk.js": "/mind-store/static/js/453.a1ed45fd.chunk.js",
+    "static/media/NanumJarHaGoIssEo.ttf": "/mind-store/static/media/NanumJarHaGoIssEo.5031cbc19dc8c53ac6aa.ttf",
+    "static/media/NanumCoDingHeuiMang.ttf": "/mind-store/static/media/NanumCoDingHeuiMang.d54483b2a1621b303338.ttf",
+    "static/media/NanumHaengBogHanDoBi.ttf": "/mind-store/static/media/NanumHaengBogHanDoBi.5a115fd659e99fd3423d.ttf",
+    "static/media/background_6.png": "/mind-store/static/media/background_6.eef53bfaba53f5886623.png",
+    "index.html": "/mind-store/index.html",
+    "main.0314d706.css.map": "/mind-store/static/css/main.0314d706.css.map",
+    "main.a45dcaa1.js.map": "/mind-store/static/js/main.a45dcaa1.js.map",
+    "453.a1ed45fd.chunk.js.map": "/mind-store/static/js/453.a1ed45fd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0314d706.css",
+    "static/js/main.a45dcaa1.js"
+  ]
+}
