@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import usersdb from "../../data/usersdb";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { setCurrentUser } from "../../utils/auth";
+import { findUserByCredentials, initUsers } from "../../utils/userStore";
 import "./Login.css";
 
 const Login = () => {
@@ -11,10 +11,12 @@ const Login = () => {
   const [pw, setPw] = useState("");
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    initUsers();
+  }, []);
+
   const handleLogin = () => {
-    const user = usersdb.find(
-      (u) => u.user_id === userId && u.user_pw === pw
-    );
+    const user = findUserByCredentials(userId.trim(), pw);
 
     if (!user) {
       setError("아이디 또는 비밀번호가 올바르지 않습니다.");
@@ -22,13 +24,8 @@ const Login = () => {
     }
 
     // ✅ 로그인 성공 (중요)
-    setCurrentUser({
-      user_id: user.user_id,
-      nick: user.nick,
-      admin: user.admin,
-    });
-
-    navigate("/"); // 홈으로 이동
+    setCurrentUser(user);
+    navigate(user.admin === 1 ? "/admin/dashboard" : "/mypage?tab=reservations");
   };
 
   return (
@@ -70,6 +67,10 @@ const Login = () => {
                         <b>minho / dummy</b><br />
                         <b>yewon / dummy</b><br />
                         <b>hyunsu2 / dummy</b>
+        </p>
+
+        <p className="login-hint">
+          아직 계정이 없다면 <Link to="/signup">회원가입</Link> 후 바로 마이페이지를 사용할 수 있습니다.
         </p>
       </div>
     </div>

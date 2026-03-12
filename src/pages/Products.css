@@ -1,0 +1,120 @@
+.product-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.product-intro {
+  margin: 10px 0 26px;
+  color: rgba(255,255,255,0.86);
+  font-size: clamp(18px, 0.9vw + 14px, 22px);
+  line-height: 1.7;
+}
+
+.product-search {
+  flex: 1 1 320px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  overflow: hidden;
+  padding: 0;
+}
+
+.product-image {
+  width: 100%;
+  aspect-ratio: 1.08 / 1;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.9) contrast(0.98);
+}
+
+.product-body {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+
+.product-category {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.92);
+  font-size: var(--text-xs);
+  align-items: center;
+}
+
+.product-description {
+  min-height: 3.4em;
+}
+
+.product-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.product-price {
+  color: rgba(255,255,255,0.96);
+  font-family: "SUIT", "Apple SD Gothic Neo", sans-serif;
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+
+.product-stock {
+  font-size: var(--text-xs);
+  color: var(--text-soft);
+}
+
+.product-order-button {
+  min-height: 58px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.16);
+  color: rgba(255,255,255,0.96);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+}
+
+.product-order-button:disabled {
+  opacity: 0.42;
+  cursor: default;
+  box-shadow: none;
+}
+
+.product-detail-button {
+  min-height: 48px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.88);
+  font-size: var(--text-xs);
+  cursor: pointer;
+}
+
+.product-notice {
+  margin: 0 0 18px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(255, 252, 246, 0.56);
+  border: 1px solid rgba(55, 37, 29, 0.08);
+  font-size: var(--text-xs);
+  color: #5a463a;
+}
+
+.product-guide-grid {
+  margin-top: 28px;
+}

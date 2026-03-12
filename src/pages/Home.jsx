@@ -26,9 +26,16 @@ const Home = () => {
     };
   }, [openDiary]);
 
-  /** 모달 열릴 때 body 스크롤 잠금 */
+  /** 모달이 열릴 때만 body 스크롤을 잠그고, 화면을 벗어나면 반드시 원복합니다. */
   useEffect(() => {
-    document.body.style.overflow = openDiary ? "hidden" : "auto";
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = openDiary ? "hidden" : "";
+
+    // 전역 body를 건드린 값은 이 화면이 사라질 때 복구해야 다른 페이지까지 영향이 번지지 않습니다.
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
   }, [openDiary]);
 
   /** 공통 닫기 */
@@ -37,65 +44,46 @@ const Home = () => {
     setShowResult(false);
   };
 
-  /** 홈에서 일기 저장 */
+  /** 홈에서 바로 일기를 저장하고 완료 화면으로 넘깁니다. */
   const handleSubmitDiary = (data) => {
     saveDiary({
       ...data,
-      userId: "minji", // 임시 로그인 유저
+      userId: "minji", // 임시 로그인 사용자
     });
 
     setShowResult(true);
   };
 
   return (
-  <div className="home-page">  
-    <div className="home">
-      {/* 홈 기본 카드 */}
-      {!openDiary && (
-        <div className="home-center">
-          <h1>오늘 마음이 어땠나요?</h1>
-          <p>
-            말로 하기 어려운 마음을,
-            마음 일기장에 천천히 적어도 괜찮아요.
-          </p>
+    <div className="home-page">
+      <div className="home">
+        {/* 기본 안내 카드 */}
+        {!openDiary && (
+          <section className="home-hero">
+            <h1 className="home-message">오늘 마음은 어땠나요?</h1>
+            <p className="home-submessage">말로하기 어려운 마음을, 마음 일기장에 천천히 적어주세요.</p>
+            <button className="diary-btn" onClick={() => setOpenDiary(true)}>
+              마음일기 쓰기
+            </button>
+          </section>
+        )}
 
-          <button
-            className="diary-btn"
-            onClick={() => setOpenDiary(true)}
-          >
-            마음일기 쓰기
-          </button>
-        </div>
-      )}
-
-      {/* 일기 모달 */}
-      {openDiary && (
-        <ModalPortal>
-          <div
-            className="diary-overlay"
-            onClick={closeAll}
-          >
-            <div
-              className="diary-modal"
-              onClick={(e) => e.stopPropagation()}
-            >
-
-              {!showResult ? (
-                <DiaryWrite
-                  onSubmit={handleSubmitDiary}
-                  onCancel={closeAll}
-                />
-              ) : (
-                <DiarySendResult
-                  onDone={closeAll}
-                />
-              )}
+        {/* 일기 모달 */}
+        {openDiary && (
+          <ModalPortal>
+            <div className="diary-overlay" onClick={closeAll}>
+              <div className="diary-modal" onClick={(e) => e.stopPropagation()}>
+                {!showResult ? (
+                  <DiaryWrite onSubmit={handleSubmitDiary} onCancel={closeAll} />
+                ) : (
+                  <DiarySendResult onDone={closeAll} />
+                )}
+              </div>
             </div>
-          </div>
-        </ModalPortal>
-      )}
+          </ModalPortal>
+        )}
+      </div>
     </div>
-  </div>  
   );
 };
 

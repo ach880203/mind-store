@@ -5,8 +5,12 @@ export const setCurrentUser = (user) => {
 };
 
 export const getCurrentUser = () => {
-  const raw = localStorage.getItem(USER_KEY);
-  return raw ? JSON.parse(raw) : null;
+  try {
+    const raw = localStorage.getItem(USER_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (error) {
+    return null;
+  }
 };
 
 export const clearCurrentUser = () => {

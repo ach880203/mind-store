@@ -1,0 +1,52 @@
+.about-story-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 18px;
+}
+
+.about-story-text {
+  display: grid;
+  gap: 16px;
+}
+
+.about-step-list,
+.about-faq-list {
+  display: grid;
+  gap: 14px;
+}
+
+.about-step-card {
+  padding: 20px 22px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid rgba(55, 37, 29, 0.08);
+}
+
+.about-step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #31221c 0%, #5c4134 100%);
+  color: var(--text-inverse);
+  font-size: var(--text-xs);
+}
+
+.about-faq-item {
+  background:
+    linear-gradient(180deg, rgba(250, 245, 238, 0.92) 0%, rgba(241, 232, 223, 0.82) 100%);
+}
+
+.about-faq-item h4 {
+  margin-bottom: 8px;
+  font-family: "Noto Serif KR", serif;
+}
+
+@media (max-width: 900px) {
+  .about-story-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -4,30 +4,38 @@
 
 /* 페이지 전체 */
 .diary-list-page {
-  max-width: 900px;
+  max-width: 920px;
   margin: 0 auto;
 }
 
 /* 히어로 영역 */
 .diary-hero {
-  background: rgba(0,0,0,0.70);
-  backdrop-filter: blur(25px);
-
-  border-radius: 26px;
-  padding: 36px 28px;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  padding: 28px 24px;
   text-align: center;
-
-  margin-bottom: 40px;
+  margin-bottom: 24px;
 }
 
 .diary-hero h2 {
-  margin: 0 0 14px;
+  margin: 0 0 10px;
   font-size: 22px;
   font-weight: 600;
+  color: rgba(255,255,255,0.95);
+}
+
+.diary-hero p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.68);
 }
 
 .diary-hero .diary-btn {
-  margin-top: 10px;
+  margin-top: 16px;
+  background: rgba(255,255,255,0.16);
 }
 
 /* 리스트 래퍼 */
@@ -39,21 +47,19 @@
 
 /* 카드 */
 .diary-card {
-  background: rgba(0,0,0,0.70);
-  backdrop-filter: blur(25px);
-
+  background: rgba(0,0,0,0.36);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
   border-radius: 22px;
-  padding: 22px 24px;
-
+  padding: 18px 20px;
   cursor: pointer;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
-
+  box-shadow: 0 18px 40px rgba(0,0,0,0.22);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .diary-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 28px 60px rgba(0,0,0,0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 22px 46px rgba(0,0,0,0.28);
 }
 
 /* 카드 헤더 */
@@ -61,13 +67,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 /* 작성자 */
 .diary-author {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: rgba(255,255,255,0.85);
 }
@@ -75,7 +80,7 @@
 /* 날짜 */
 .diary-date {
   font-size: 12px;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.56);
 }
 
 /* 미리보기 문구 */
@@ -86,6 +91,48 @@
 
 .diary-preview.muted {
   color: rgba(255,255,255,0.65);
+}
+
+.diary-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.diary-badge,
+.diary-mine-badge,
+.diary-comment-count {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.diary-badge {
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.diary-badge.read {
+  background: rgba(159,211,199,0.16);
+  color: #bfe5db;
+}
+
+.diary-badge.unread {
+  background: rgba(255,193,7,0.14);
+  color: #f4d373;
+}
+
+.diary-mine-badge {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.9);
+}
+
+.diary-comment-count {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.72);
 }
 
 /* 비어 있을 때 */
@@ -119,21 +166,22 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 24px 0 18px;
-  padding: 10px 14px;
-  background: rgba(0,0,0,0.50);
+  margin: 0 0 18px;
+  padding: 10px 12px;
+  background: rgba(0,0,0,0.32);
+  border: 1px solid rgba(255,255,255,0.1);
   border-radius: 14px;
   backdrop-filter: blur(6px);
 }
 
 .diary-search-input {
   flex: 1;
-  background: rgba(255,255,255,0.12);
-  border: none;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 999px;
   padding: 10px 16px;
   color: #fff;
-  font-size: 25px;
+  font-size: 14px;
   outline: none;
 }
 
@@ -141,8 +189,59 @@
   color: rgba(255,255,255,0.5);
 }
 
-.diary-count {
-  font-size: 20px;
+.diary-search-count {
+  font-size: 13px;
   opacity: 0.7;
+  white-space: nowrap;
+}
+
+.diary-filter-row {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 18px;
+}
+
+.diary-filter-btn {
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.82);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.diary-filter-btn.active {
+  background: rgba(255,255,255,0.16);
+  color: rgba(255,255,255,0.96);
+}
+
+.diary-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.diary-page-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.88);
+  cursor: pointer;
+}
+
+.diary-page-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.diary-page-info {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
 }
 

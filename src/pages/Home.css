@@ -1,121 +1,107 @@
-/* HOME */
+.home-page {
+  position: relative;
+}
+
+.home-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(13, 10, 8, 0.5) 0%, rgba(13, 10, 8, 0.2) 38%, rgba(13, 10, 8, 0.58) 100%),
+    url("../../public/img/background_6.png") center/cover no-repeat;
+  z-index: -3;
+}
+
+.home-page::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 52% 18%, rgba(255, 212, 145, 0.28) 0%, rgba(255, 212, 145, 0.1) 18%, transparent 42%),
+    radial-gradient(circle at 50% 24%, rgba(255, 237, 205, 0.18) 0%, transparent 28%),
+    linear-gradient(180deg, rgba(255, 239, 210, 0.06) 0%, transparent 36%, rgba(0, 0, 0, 0.18) 100%);
+  z-index: -2;
+  pointer-events: none;
+}
 
 .home-page .home {
   min-height: calc(100vh - var(--header-height));
-
   display: flex;
   align-items: center;
   justify-content: center;
-
+  padding: clamp(40px, 6vw, 74px) var(--page-padding) clamp(52px, 7vw, 88px);
   box-sizing: border-box;
 }
 
-.home-center {
-  width: min(480px, 90vw);   /* ⭐ 핵심 */
-  padding: clamp(28px, 4vw, 46px);
-  margin-top: -25vh;
-
+.home-hero {
+  width: min(720px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
   text-align: center;
-  color: #ffffff;
-
-  background: rgba(63, 63, 63, 0.32);
-  backdrop-filter: blur(6px);
-  border-radius: 24px;
-
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-
-  transition: 
-   transform 0.4s ease,
-   box-shadow 0.4s ease;
-  
-   opacity: 0;
-   transform: translateY(24px);
-  animation: card-fade-up 0.8s ease forwards;
-  animation-delay: 0.2s;
+  transform: translateY(-2vh);
 }
 
-
-/* 타이틀 */
-.home-center h1 {
-  font-size: clamp(32px, 5.5vw, 48px);
-  margin-bottom: var(--space-sm);
-  font-family: var(--font-logo);
-  line-height: 1.25;
+.home-message {
+  margin: 0;
+  color: rgba(255, 244, 226, 0.96);
+  font-family: "Noto Serif KR", serif;
+  font-size: clamp(26px, 1.8vw + 12px, 36px);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.025em;
+  text-shadow:
+    0 0 14px rgba(255, 211, 142, 0.14),
+    0 4px 20px rgba(7, 4, 3, 0.34);
+  word-break: keep-all;
 }
 
-
-/* 설명 */
-.home-center p {
-  font-size: var(--text-md);
-  opacity: 0.9;
-  font-family: var(--font-logo);
+.home-submessage {
+  margin: -6px 0 0;
+  color: rgba(255, 242, 226, 0.8);
+  font-size: clamp(16px, 0.6vw + 13px, 20px);
+  line-height: 1.8;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 14px rgba(7, 4, 3, 0.24);
+  word-break: keep-all;
 }
 
-/* 버튼 */
 .diary-btn {
-  margin-top: var(--space-md);
-  padding: clamp(12px, 2.5vw, 16px)
-           clamp(32px, 5vw, 44px);
-
-  font-size: var(--text-md);
-  font-weight: 600;
-
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  min-height: 52px;
+  padding: 0 22px;
   border-radius: 999px;
-
+  font-size: clamp(14px, 0.35vw + 12px, 16px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+  border: 1px solid rgba(255, 235, 198, 0.16);
+  background: rgba(255, 245, 224, 0.06);
+  backdrop-filter: blur(12px);
+  color: rgba(255, 245, 228, 0.94);
   cursor: pointer;
-  backdrop-filter: blur(6px);
-
-  transition: transform 0.15s ease,
-              box-shadow 0.15s ease,
-              background 0.3s ease;
-  font-family: var(--font-logo);
+  box-shadow:
+    0 10px 24px rgba(13, 8, 6, 0.18),
+    inset 0 1px 0 rgba(255, 245, 228, 0.08);
 }
 
 .diary-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
-}
-
-/* active (클릭 순간) */
-.diary-btn:active {
-  transform: translateY(1px) scale(0.98);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-@media (hover: hover) {
-  .diary-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-  }
-}
-
-@media (max-width: 768px) {
-  .home-center {
-    margin-top: -8vh;
-  }
-}
-
-@keyframes card-fade-up {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  background: rgba(255, 245, 224, 0.1);
+  border-color: rgba(255, 235, 198, 0.24);
 }
 
 .home-page .diary-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(18, 12, 10, 0.46);
   z-index: 1200;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
 .diary-modal {
@@ -123,13 +109,9 @@
   width: 100%;
   max-width: 900px;
   max-height: 90vh;
-
-  /* ⛔ 카드 스타일 전부 제거 */
   background: transparent;
-  backdrop-filter: none;
   border-radius: 0;
   padding: 0;
-
   overflow: hidden;
 }
 
@@ -137,22 +119,12 @@
   animation: modalOut 0.25s ease-in forwards;
 }
 
-@keyframes modalIn {
-  from {
-    transform: scale(0.94);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
 @keyframes modalOut {
   from {
     transform: scale(1);
     opacity: 1;
   }
+
   to {
     transform: scale(0.94);
     opacity: 0;
@@ -163,10 +135,32 @@
   position: absolute;
   top: 16px;
   right: 18px;
-
   background: none;
   border: none;
   font-size: 22px;
   color: white;
   cursor: pointer;
+}
+
+@media (max-width: 980px) {
+  .home-hero {
+    width: min(88vw, 680px);
+  }
+}
+
+@media (max-width: 768px) {
+  .home-hero {
+    transform: translateY(-1vh);
+    gap: 18px;
+  }
+
+  .home-message {
+    font-size: clamp(22px, 6vw, 30px);
+    line-height: 1.58;
+  }
+
+  .home-submessage {
+    font-size: clamp(15px, 3.8vw, 18px);
+    line-height: 1.7;
+  }
 }

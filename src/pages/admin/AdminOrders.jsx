@@ -1,8 +1,8 @@
 // src/pages/admin/AdminOrders.jsx
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import "./AdminOrders.css";
-import ordersdb from "../../data/ordersdb";
+import { initOrders, saveOrders } from "../../utils/orderStore";
 
 const STATUS = ["전체", "결제완료", "배송준비중", "배송중", "배송완료", "취소"];
 
@@ -22,14 +22,16 @@ const AdminOrders = () => {
   /* ===============================
      기존 state (유지)
   =============================== */
-  const [orders, setOrders] = useState(() =>
-    Array.isArray(ordersdb) ? [...ordersdb] : []
-  );
+  const [orders, setOrders] = useState([]);
   const [selected, setSelected] = useState(null);
   const [closing, setClosing] = useState(false);
   const [toast, setToast] = useState("");
 
   const toastTimer = useRef(null);
+
+  useEffect(() => {
+    setOrders(initOrders());
+  }, []);
 
   /* ===============================
      URL 업데이트 (유일한 출구)
@@ -96,11 +98,13 @@ const AdminOrders = () => {
   };
 
   const updateStatus = (newStatus) => {
-    setOrders((prev) =>
-      prev.map((o) =>
+    setOrders((prev) => {
+      const nextOrders = prev.map((o) =>
         o.id === selected.id ? { ...o, status: newStatus } : o
-      )
-    );
+      );
+      saveOrders(nextOrders);
+      return nextOrders;
+    });
 
     setSelected((prev) => ({ ...prev, status: newStatus }));
     showToast(`상태가 '${newStatus}'로 변경되었습니다`);

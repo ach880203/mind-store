@@ -1,9 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import usersdb from "../../data/usersdb";
 import "./AdminUsers.css";
 import "./AdminModal.css";
-
-const LS_KEY = "admin_users_v1";
+import { initUsers, saveUsers } from "../../utils/userStore";
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
@@ -20,25 +18,14 @@ const AdminUsers = () => {
 
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(LS_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setUsers(parsed);
-          hydratedRef.current = true;
-          return;
-        }
-      }
-    } catch {}
-    setUsers(usersdb);
+    setUsers(initUsers());
     hydratedRef.current = true;
   }, []);
 
 
   useEffect(() => {
     if (!hydratedRef.current) return;
-    localStorage.setItem(LS_KEY, JSON.stringify(users));
+    saveUsers(users);
   }, [users]);
 
   /* debounce */
@@ -177,6 +164,7 @@ const AdminUsers = () => {
                     {u.admin ? "관리자" : "일반"}
                   </span>
                 </td>
+                <td>{u.reg_date}</td>
               </tr>
             ))}
           </tbody>
@@ -204,6 +192,8 @@ const AdminUsers = () => {
             <p>닉네임: {selected.nick}</p>
             <p>전화: {selected.phone}</p>
             <p>이메일: {selected.email}</p>
+            <p>주소: {selected.address || "기록 없음"}</p>
+            <p>가입일: {selected.reg_date || "기록 없음"}</p>
 
             <div className="status-action">
               <button onClick={() => toggleAdmin(selected.id)}>

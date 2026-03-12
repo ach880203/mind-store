@@ -1,5 +1,5 @@
 :root {
-  --header-height: clamp(56px, 8vw, 75px);
+  --header-height: clamp(72px, 8vw, 92px);
 }
 
 .layout {
@@ -9,8 +9,9 @@
 }
 
 .main {
-  flex: 1; /* Header 제외한 나머지 영역 */
+  flex: 1; /* Header 제외 나머지 영역 */
   width: 100%;
   position: relative;
   z-index: 1;
+  overflow: visible;
 }

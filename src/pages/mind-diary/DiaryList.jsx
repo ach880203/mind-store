@@ -1,5 +1,6 @@
 import usersdb from "../../data/usersdb";
 import "./MindDiary.list.css";
+import { getCurrentUser } from "../../utils/auth";
 
 /**
  * DiaryList
@@ -12,18 +13,25 @@ const DiaryList = ({
   page,
   totalPages,
   query,
+  filters,
   onQueryChange,
+  onToggleUnreadFilter,
+  onToggleMineFilter,
   onPrevPage,
   onNextPage,
   onToggleRead,
   onWriteClick,
   onSelectDiary,
 }) => {
+  const me = getCurrentUser();
+  const isAdminViewer = Number(me?.admin) === 1;
+
   return (
     <div className="diary-list-page">
       {/* 히어로 영역 */}
       <section className="diary-hero">
         <h2>오늘 마음이 어땠나요?</h2>
+        <p>말로하기 어려운 마음을, 마음 일기장에 천천히 적어주세요.</p>
         <button className="diary-btn primary" onClick={onWriteClick}>
           마음일기 쓰기
         </button>
@@ -42,6 +50,23 @@ const DiaryList = ({
         </span>
       </div>
 
+      <div className="diary-filter-row">
+        <button
+          type="button"
+          className={`diary-filter-btn ${filters.unreadOnly ? "active" : ""}`}
+          onClick={onToggleUnreadFilter}
+        >
+          안읽음
+        </button>
+        <button
+          type="button"
+          className={`diary-filter-btn ${filters.mineOnly ? "active" : ""}`}
+          onClick={onToggleMineFilter}
+        >
+          내가쓴글
+        </button>
+      </div>
+
       {/* 빈 상태 */}
       {totalCount === 0 && (
         <p className="diary-empty">아직 기록된 마음이 없어요.</p>
@@ -50,8 +75,15 @@ const DiaryList = ({
       {/* 리스트 */}
       <div className="diary-list">
         {diaries.map((d) => {
-          const user = usersdb.find((u) => u.user_id === d.userId);
           const isRead = !!d.isRead;
+          const commentCount = Array.isArray(d.comments) ? d.comments.length : 0;
+          const isMine = me?.user_id && d.userId === me.user_id;
+          const author = usersdb.find((user) => user.user_id === d.userId);
+          const authorLabel = isAdminViewer
+            ? `${author?.nick || "알 수 없음"} (${author?.user_id || "미확인"})`
+            : isMine
+              ? "익명 · 내가 쓴 글"
+              : "익명";
 
           return (
               <div
@@ -64,8 +96,7 @@ const DiaryList = ({
                 <span className="diary-heart" />
 
                 <span className="diary-author">
-                  {/*{user?.nick || "익명"}*/}
-                  {"익명"}
+                  {authorLabel}
                 </span>
 
                 <span className="diary-date">
@@ -77,6 +108,8 @@ const DiaryList = ({
                 <span className={`diary-badge ${isRead ? "read" : "unread"}`}>
                   {isRead ? "읽음" : "안읽음"}
                 </span>
+                {isMine && <span className="diary-mine-badge">내가 쓴 글</span>}
+                <span className="diary-comment-count">대화 {commentCount}</span>
 
                 {/*<button
                   className="diary-read-toggle"

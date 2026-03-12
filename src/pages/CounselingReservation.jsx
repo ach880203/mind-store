@@ -1,35 +1,43 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./CounselingReservation.css";
 import counselingdb from "../data/counselingdb";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, useMotionValue } from "framer-motion";
+import { getCurrentUser } from "../utils/auth";
+import { addReservation, initReservations } from "./admin/reservationStorage";
 
 const CounselingReservation = ({ counselingId, onClose }) => {
+  const navigate = useNavigate();
   const counseling = counselingdb.find((c) => Number(c.id) === Number(counselingId));
+  const currentUser = getCurrentUser();
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [reservedInfo, setReservedInfo] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const timeSectionRef = useRef(null);
+
+  const closeReservationPanel = useCallback(() => {
+    if (typeof onClose === "function") {
+      onClose();
+      return;
+    }
+
+    navigate("/counseling");
+  }, [navigate, onClose]);
 
         /* esc키로 창 닫기 */
   useEffect(() => {
+    initReservations();
     const handler = (e) => {
-      if ( e.key === "Escape") onClose();
+      if ( e.key === "Escape") closeReservationPanel();
     };
     window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);}, [onClose]);
+    return () => window.removeEventListener("keydown", handler);}, [closeReservationPanel]);
   /* end esc키로 창 닫기 */
 
   /* 모바일 스와이프로 창 닫기 */
   const X = useMotionValue(0);
-
-    <motion.div
-        className="reservation"
-        drag="X"
-        dragConstraints={{left: 0, right: 0}}
-        onDragEnd={(e, info) => {
-          if (info.offset.x > 120) onClose();
-        }} style={{ X }}/>
   /* end 모바일 스와이프로 창 닫기 */
 
   const getNextDays = (count = 14) => {
@@ -70,32 +78,71 @@ const CounselingReservation = ({ counselingId, onClose }) => {
         <p>
           {reservedInfo.date.getMonth() + 1}월 {reservedInfo.date.getDate()}일{" "}
           {reservedInfo.time}
-        <p>늦지 않게 방문해 주세요.</p>
         </p>
-        <button onClick={onClose}>확인</button>
+        <p>늦지 않게 방문해 주세요.</p>
+        <button onClick={() => navigate("/mypage?tab=reservations")}>마이페이지에서 확인</button>
       </motion.div>
     );
   }
   /* end 예약 완료 메세지 */
 
+  if (!counseling) {
+    return (
+      <div className="counseling-page">
+        <div className="reservation">
+          <h1>상담 예약</h1>
+          <p>선택한 상담 상품 정보를 찾을 수 없습니다.</p>
+          <button className="confirm-btn" onClick={closeReservationPanel}>
+            상담 목록으로 돌아가기
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!currentUser) {
+    return (
+      <div className="counseling-page">
+        <div className="reservation">
+          <h1>상담 예약</h1>
+          <p>예약 내역을 기억하고 마이페이지에서 다시 보려면 로그인 상태가 필요합니다.</p>
+          <div className="page-actions">
+            <Link to="/login" className="primary-link">
+              로그인하기
+            </Link>
+            <button className="secondary-link mypage-action" onClick={closeReservationPanel}>
+              상담 화면으로 돌아가기
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="counseling-page">
-    <div className="reservation">
+    <motion.div
+      className="reservation"
+      drag="x"
+      dragConstraints={{ left: 0, right: 0 }}
+      onDragEnd={(e, info) => {
+        if (info.offset.x > 120) closeReservationPanel();
+      }}
+      style={{ x: X }}
+    >
 
-      <button className="panel-close" onClick={onClose}>X</button>
+      <button className="panel-close" onClick={closeReservationPanel}>X</button>
 
       <h1>상담 예약</h1>
 
       {/* 선택한 상담 상품 표시*/}
-      {counseling && (
-        <div className="selected-counseling">
-          <h2>선택한 상담 상품</h2>
-          <p>{counseling.title}</p>
-          <p>
-            {counseling.price.toLocaleString()}원 . {counseling.duration}
-          </p>
-        </div>
-      )}
+      <div className="selected-counseling">
+        <h2>선택한 상담 상품</h2>
+        <p>{counseling.title}</p>
+        <p>
+          {counseling.price.toLocaleString()}원 . {counseling.duration}
+        </p>
+      </div>
 
       <div className="reservation-container">
         {/* 날짜 선택 */}
@@ -108,9 +155,9 @@ const CounselingReservation = ({ counselingId, onClose }) => {
                 key={date.toDateString()}
                 className="date-btn"
                 onClick={() => {
-                    console.log("🔥 날짜 클릭됨", date);
                   setSelectedDate(date);
                   setSelectedTime(null);
+                  setErrorMessage("");
 
                   // 날짜를 선택 하면 → 시간 선택으로 이동
                   setTimeout(() => {
@@ -147,37 +194,47 @@ const CounselingReservation = ({ counselingId, onClose }) => {
                   selectedTime === slot.start ? "active" : ""
                 }`}
                 onClick={() => {
-                    console.log("🔥 시간 클릭됨", slot.start);
-                    setSelectedTime(slot.start);}}
+                    setSelectedTime(slot.start);
+                    setErrorMessage("");
+                  }}
               >
                 {slot.start} ~ {slot.end}
               </button>
             ))}
         </div>
+        {errorMessage && <p className="guide">{errorMessage}</p>}
         <button
           className="confirm-btn"
           disabled={!selectedDate || !selectedTime}
           onClick={() => {
-            console.log("counseling :", counseling)
+            try {
+              addReservation({
+                counselingId: counseling.id,
+                title: counseling.title,
+                date: [
+                  selectedDate.getFullYear(),
+                  String(selectedDate.getMonth() + 1).padStart(2, "0"),
+                  String(selectedDate.getDate()).padStart(2, "0"),
+                ].join("-"),
+                time: selectedTime,
+              });
 
-            if (!counseling) return;
+              setReservedInfo({
+                title: counseling.title,
+                date: selectedDate,
+                time: selectedTime,
+              });
 
-            console.log("예약확정 클릭됨");
-
-            setReservedInfo({
-              title: counseling.title,
-              date: selectedDate,
-              time: selectedTime,
-              
-            });
-
-            setDone(true);
+              setDone(true);
+            } catch (error) {
+              setErrorMessage(error.message || "예약 저장 중 문제가 발생했습니다.");
+            }
           }}
         >
            예약확정
         </button>
       </div>
-    </div>
+    </motion.div>
   </div>  
   );
 };

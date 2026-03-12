@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./DiaryPasswordModal.css";
+import { getCurrentUser } from "../../utils/auth";
 
 /**
  * DiaryPasswordModal
@@ -9,6 +10,9 @@ import "./DiaryPasswordModal.css";
 const DiaryPasswordModal = ({ diary, onSuccess, onCancel }) => {
   const [inputPw, setInputPw] = useState("");
   const [error, setError] = useState("");
+  const me = getCurrentUser();
+  const isAdminViewer = Number(me?.admin) === 1;
+  const isOwner = me?.user_id && diary.userId === me.user_id;
 
   /** ESC 키로 닫기 */
   useEffect(() => {
@@ -21,6 +25,11 @@ const DiaryPasswordModal = ({ diary, onSuccess, onCancel }) => {
 
   /** 비밀번호 확인 */
   const handleConfirm = () => {
+    if (isAdminViewer || isOwner) {
+      onSuccess(diary);
+      return;
+    }
+
     if (inputPw === diary.password) {
       onSuccess(diary);
     } else {
@@ -40,6 +49,18 @@ const DiaryPasswordModal = ({ diary, onSuccess, onCancel }) => {
 
         <h3 className="password-title">비밀번호를 입력하세요</h3>
 
+        {isAdminViewer && (
+          <p className="password-admin-hint">
+            관리자 계정은 비밀글을 바로 확인할 수 있습니다.
+          </p>
+        )}
+
+        {isOwner && (
+          <p className="password-admin-hint">
+            내가 작성한 글은 비밀번호 없이 바로 확인할 수 있습니다.
+          </p>
+        )}
+
         <input
           type="password"
           className="password-input"
@@ -49,6 +70,7 @@ const DiaryPasswordModal = ({ diary, onSuccess, onCancel }) => {
             setError("");
           }}
           placeholder="비밀번호"
+          disabled={isAdminViewer || isOwner}
         />
 
         {error && <p className="password-error">{error}</p>}

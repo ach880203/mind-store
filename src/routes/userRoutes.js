@@ -1,17 +1,16 @@
-import { Route } from "react-router-dom";
+import { Navigate, Route } from "react-router-dom";
 import Layout from "../components/Layout";
 
 import Home from "../pages/Home";
 import Counseling from "../pages/Counseling";
 import Products from "../pages/Products";
-import CounselingReservation from "../pages/CounselingReservation";
+import ProductDetail from "../pages/ProductDetail";
 import About from "../pages/About";
 
 import MindDiaryHome from "../pages/mind-diary/MindDiaryHome";
 import Login from "../pages/auth/Login";
-import ReservationCheck from "../pages/ReservationCheck";
 import Signup from './../pages/auth/Signup';
-import OrdersCheck from "../pages/OrdersCheck";
+import MyPage from "../pages/MyPage";
 
 
 
@@ -22,12 +21,14 @@ const UserRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/counseling" element={<Counseling />} />
         <Route path="/products" element={<Products />} />
-        <Route path="/reservation" element={<CounselingReservation />} />
+        <Route path="/products/detail" element={<ProductDetail />} />
+        <Route path="/reservation" element={<Navigate to="/counseling" replace />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/reservation/check" element={<ReservationCheck />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/orders/check" element={<OrdersCheck />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/reservation/check" element={<Navigate to="/mypage?tab=reservations" replace />} />
+        <Route path="/orders/check" element={<Navigate to="/mypage?tab=orders" replace />} />
 
         
         <Route path="/mind-diary" element={<MindDiaryHome />}/>

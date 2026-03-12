@@ -1,90 +1,9 @@
-.reservation-check-page {
-  min-height: calc(100vh - var(--header-height));
-  padding: 24px 24px 48px;
-
-  max-width: 1180px;
-  margin: 0 auto;
-
-  position: relative;
-  z-index: 2; /* Header(1000)보다 낮으면 OK */
-
-  color: var(--text-main);
+.reservation-check-page .summary-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-
-/* 제목 */
-.reservation-title {
-  margin-bottom: 18px;
-  font-size: 20px;
-  font-weight: 600;
-}
-
-/* 로그인 필요 */
-.reservation-login-required {
-  opacity: 0.8;
-  text-align: center;
-  margin-top: 120px;
-}
-
-/* 비어있을 때 */
-.reservation-empty {
-  opacity: 0.65;
-  margin-top: 24px;
-}
-
-/* 리스트 */
-.reservation-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-/* 카드 */
-.reservation-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px 18px;
-  border-radius: 18px;
-  background: rgba(0, 0, 0, 0.38);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
-}
-
-/* 상태 배지 */
-.reservation-status {
-  min-width: 52px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
-  text-align: center;
-}
-
-/* 상태별 색 */
-.reservation-status.대기 {
-  background: rgba(255, 200, 120, 0.2);
-  color: #ffd59a;
-}
-
-.reservation-status.확정 {
-  background: rgba(120, 200, 255, 0.2);
-  color: #9fd6ff;
-}
-
-/* 정보 영역 */
-.reservation-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.reservation-datetime {
-  font-size: 14px;
-  opacity: 0.85;
-}
-
-.reservation-title-small {
-  font-size: 13px;
-  opacity: 0.65;
+@media (max-width: 900px) {
+  .reservation-check-page .summary-list {
+    grid-template-columns: 1fr;
+  }
 }

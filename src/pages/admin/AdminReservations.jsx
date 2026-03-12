@@ -4,7 +4,7 @@ import counselingdb from "../../data/counselingdb";
 import "./AdminReservations.css";
 import "./AdminModal.css";
 import { useSearchParams } from "react-router-dom";
-import { initReservations, loadReservations, saveReservations } from "./reservationStorage";
+import { initReservations, saveReservations } from "./reservationStorage";
 
 const STATUS = ["전체", "대기", "확정", "완료", "취소"];
 

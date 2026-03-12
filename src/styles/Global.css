@@ -1,67 +1,142 @@
+@import url("https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&display=swap");
+
 /* =========================
 GLOBAL BASE */
 :root {
-  /* layout */
-  --page-max-width: 1180px;
-  --header-height: clamp(56px, 8vw, 75px);
+  --page-max-width: 1220px;
+  --header-height: clamp(74px, 8vw, 94px);
+  --page-padding: clamp(20px, 4vw, 44px);
 
-  /* color */
-  --accent: #9fd3c7;
-  --text-main: rgba(255,255,255,0.94);
-  --text-soft: rgba(255,255,255,0.78);
+  --accent: #f1c787;
+  --accent-strong: #d9a35a;
+  --accent-soft: rgba(241, 199, 135, 0.12);
 
-  /* card */
-  --bg-card: rgba(0,0,0,0.34);
-  --bg-card-strong: rgba(0,0,0,0.46);
-  --border: rgba(255,255,255,0.14);
-  --border-strong: rgba(255,255,255,0.22);
+  --text-main: rgba(255, 248, 240, 0.94);
+  --text-soft: rgba(255, 242, 228, 0.8);
+  --text-muted: rgba(255, 242, 228, 0.6);
+  --text-inverse: rgba(20, 13, 10, 0.94);
 
-  --radius-lg: 24px;
-  --radius-md: 16px;
+  --bg-card: linear-gradient(180deg, rgba(0, 0, 0, 0.32) 0%, rgba(20, 14, 11, 0.42) 100%);
+  --bg-card-strong: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(20, 14, 11, 0.5) 100%);
+  --bg-panel: rgba(255, 255, 255, 0.06);
+  --bg-panel-strong: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --shadow-soft: 0 18px 42px rgba(0, 0, 0, 0.2);
+  --shadow-strong: 0 28px 80px rgba(0, 0, 0, 0.26);
+
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+
+  --text-xs: clamp(16px, 0.45vw + 14px, 18px);
+  --text-sm: clamp(18px, 0.7vw + 15px, 21px);
+  --text-md: clamp(20px, 0.95vw + 16px, 24px);
+  --text-lg: clamp(26px, 1.4vw + 18px, 34px);
+  --text-xl: clamp(38px, 2.4vw + 20px, 60px);
+
+  --space-xs: 8px;
+  --space-sm: 14px;
+  --space-md: 22px;
+  --space-lg: 34px;
 }
 
-/* reset-ish */
-html, body, #root {
+html,
+body,
+#root {
   width: 100%;
   min-height: 100%;
   overflow-x: hidden;
-  overscroll-behavior: none;
-  -ms-overflow-style: none;   /* IE */
-  scrollbar-width: none;      /* Firefox */
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
 }
 
-html::-webkit-scrollbar,
-body::-webkit-scrollbar,
-#root::-webkit-scrollbar {
-  display: none;              /* Chrome, Safari */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  background-image: url("../../public/img/background_6.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background:
+    linear-gradient(180deg, rgba(11, 8, 7, 0.44) 0%, rgba(11, 8, 7, 0.18) 34%, rgba(11, 8, 7, 0.5) 100%),
+    radial-gradient(circle at 50% 16%, rgba(255, 208, 130, 0.18) 0%, transparent 16%),
+    url("../../public/img/background_6.png") center/cover no-repeat;
   background-attachment: fixed;
-
-  font-family: "dobi", system-ui, sans-serif;
-  color: #fff;
+  font-family: "SUIT", "Apple SD Gothic Neo", sans-serif;
+  font-size: var(--text-md);
+  line-height: 1.7;
+  letter-spacing: -0.015em;
+  color: var(--text-main);
   overflow-x: hidden;
-
-  -ms-overflow-style: none;   /* IE */
-  scrollbar-width: none;      /* Firefox */
+  overflow-y: auto;
+  position: relative;
 }
 
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: rgba(80, 70, 57, 0.25);
+  background:
+    radial-gradient(circle at 50% 14%, rgba(255, 226, 171, 0.16) 0%, transparent 22%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, transparent 42%, rgba(0, 0, 0, 0.2) 100%);
+  pointer-events: none;
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 20%, transparent 80%, rgba(0, 0, 0, 0.12));
+  pointer-events: none;
   z-index: -1;
 }
 
+#root {
+  min-height: 100vh;
+}
+
 body::-webkit-scrollbar {
-  display: none;              /* Chrome, Safari */
+  width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+  background: rgba(255, 248, 240, 0.12);
+}
+
+body::-webkit-scrollbar-thumb {
+  background: rgba(245, 222, 196, 0.54);
+  border-radius: 999px;
+  border: 3px solid rgba(45, 31, 25, 0.28);
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  box-sizing: border-box;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid rgba(199, 134, 92, 0.56);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: rgba(199, 134, 92, 0.24);
 }
 
 @media (max-width: 768px) {

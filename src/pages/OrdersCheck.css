@@ -1,0 +1,14 @@
+.orders-check-page .summary-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.order-total {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .orders-check-page .summary-list {
+    grid-template-columns: 1fr;
+  }
+}

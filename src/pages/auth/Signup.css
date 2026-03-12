@@ -1,0 +1,119 @@
+.signup-page {
+  min-height: calc(100vh - var(--header-height));
+  padding: clamp(28px, 4vw, 44px) var(--page-padding) 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-card {
+  width: min(100%, 980px);
+  padding: clamp(30px, 4vw, 44px);
+  border-radius: 24px;
+  background: rgba(0,0,0,0.36);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.28);
+  color: var(--text-main);
+  backdrop-filter: blur(12px);
+}
+
+.signup-title {
+  margin: 0 0 10px;
+  color: rgba(255,255,255,0.95);
+  font-family: "SUIT", "Apple SD Gothic Neo", sans-serif;
+  font-size: clamp(28px, 1.6vw + 14px, 36px);
+}
+
+.signup-description {
+  margin: 0 0 24px;
+  max-width: 740px;
+  font-size: var(--text-sm);
+  color: var(--text-soft);
+}
+
+.signup-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.signup-field {
+  display: grid;
+  gap: 10px;
+}
+
+.signup-field span {
+  color: rgba(255,255,255,0.9);
+  font-size: var(--text-xs);
+}
+
+.signup-field input {
+  min-height: 62px;
+  padding: 0 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.06);
+  color: var(--text-main);
+  font-size: var(--text-sm);
+  box-sizing: border-box;
+}
+
+.signup-field input::placeholder {
+  color: rgba(255,255,255,0.42);
+}
+
+.signup-field-wide {
+  grid-column: 1 / -1;
+}
+
+.signup-feedback {
+  min-height: 32px;
+  margin: 18px 0 0;
+  font-size: var(--text-xs);
+}
+
+.signup-feedback.error {
+  color: #ad4343;
+}
+
+.signup-feedback.success {
+  color: rgba(255,255,255,0.76);
+}
+
+.signup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.signup-actions button,
+.signup-actions a {
+  min-height: 60px;
+  padding: 0 26px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: var(--text-sm);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-submit {
+  background: rgba(255,255,255,0.16);
+  color: rgba(255,255,255,0.96);
+  cursor: pointer;
+}
+
+.signup-cancel {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.1);
+  color: var(--text-main);
+}
+
+@media (max-width: 900px) {
+  .signup-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import DiaryList from "./DiaryList";
 import DiaryWrite from "./DiaryWrite";
@@ -13,6 +14,8 @@ import { getCurrentUser } from "../../utils/auth";
 const PAGE_SIZE = 5;
 
 const MindDiaryHome = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   /** 화면 모드 */
   const [mode, setMode] = useState("list"); // list | write | password | detail | result
 
@@ -27,6 +30,10 @@ const MindDiaryHome = () => {
 
   /** 검색/페이징 */
   const [query, setQuery] = useState("");
+  const [filters, setFilters] = useState({
+    unreadOnly: false,
+    mineOnly: false,
+  });
   const [page, setPage] = useState(1);
 
   /** 앱 최초 진입 시 일기 로드 */
@@ -58,7 +65,7 @@ const MindDiaryHome = () => {
    ------------------------------*/
   const filteredDiaries = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return diaries;
+    const me = getCurrentUser();
 
     return diaries.filter((d) => {
       const hay = [
@@ -73,9 +80,13 @@ const MindDiaryHome = () => {
         .join(" ")
         .toLowerCase();
 
-      return hay.includes(q);
+      const matchesQuery = !q || hay.includes(q);
+      const matchesUnread = !filters.unreadOnly || !d.isRead;
+      const matchesMine = !filters.mineOnly || (me?.user_id && d.userId === me.user_id);
+
+      return matchesQuery && matchesUnread && matchesMine;
     });
-  }, [diaries, query]);
+  }, [diaries, filters.mineOnly, filters.unreadOnly, query]);
 
   /** 페이지 계산 */
   const totalPages = Math.max(1, Math.ceil(filteredDiaries.length / PAGE_SIZE));
@@ -104,6 +115,10 @@ const MindDiaryHome = () => {
     const start = (page - 1) * PAGE_SIZE;
     return filteredDiaries.slice(start, start + PAGE_SIZE);
   }, [filteredDiaries, page]);
+
+  const targetDiaryId = useMemo(() => {
+    return new URLSearchParams(location.search).get("diaryId");
+  }, [location.search]);
 
   useEffect(() => {
     if (mode !== "list") return;
@@ -155,15 +170,8 @@ const MindDiaryHome = () => {
     setMode("list");
   };
 
-  /** 리스트에서 일기 선택 */
-  const handleSelectDiary = (diary) => {
-    // 비밀번호 모달로 이동 (기존 흐름 유지)
-    setPasswordTarget(diary);
-    setMode("password");
-  };
-
   /** 비밀번호 검증 성공 */
-  const handlePasswordSuccess = (diary) => {
+  const handlePasswordSuccess = useCallback((diary) => {
     // 상세 들어갈 때 읽음 처리(저장소 반영 + UI 반영)
     /*
     try {
@@ -182,11 +190,42 @@ const MindDiaryHome = () => {
 
     setPasswordTarget(null);
     setMode("detail");
-  };
+  }, []);
+
+  /** 리스트에서 일기 선택 */
+  const handleSelectDiary = useCallback((diary) => {
+    const me = getCurrentUser();
+    const isOwner = me?.user_id && diary.userId === me.user_id;
+
+    if (Number(me?.admin) === 1 || isOwner) {
+      handlePasswordSuccess(diary);
+      return;
+    }
+
+    // 비밀번호 모달로 이동 (기존 흐름 유지)
+    setPasswordTarget(diary);
+    setMode("password");
+  }, [handlePasswordSuccess]);
+
+  useEffect(() => {
+    if (!targetDiaryId || mode !== "list" || diaries.length === 0) {
+      return;
+    }
+
+    const targetDiary = diaries.find((diary) => String(diary.id) === String(targetDiaryId));
+    if (!targetDiary) {
+      return;
+    }
+
+    handleSelectDiary(targetDiary);
+  }, [diaries, handleSelectDiary, mode, targetDiaryId]);
 
   /** 비밀번호 모달 닫기 */
   const handlePasswordCancel = () => {
     setPasswordTarget(null);
+    if (targetDiaryId) {
+      navigate("/mind-diary", { replace: true });
+    }
     setMode("list");
   };
 
@@ -221,7 +260,7 @@ const MindDiaryHome = () => {
      ================================ */
 
   return (
-    <>
+    <div className="mind-diary-shell">
       {mode === "list" && (
         <DiaryList
           diaries={pagedDiaries}
@@ -229,7 +268,14 @@ const MindDiaryHome = () => {
           page={page}
           totalPages={totalPages}
           query={query}
+          filters={filters}
           onQueryChange={setQuery}
+          onToggleUnreadFilter={() =>
+            setFilters((prev) => ({ ...prev, unreadOnly: !prev.unreadOnly }))
+          }
+          onToggleMineFilter={() =>
+            setFilters((prev) => ({ ...prev, mineOnly: !prev.mineOnly }))
+          }
           onPrevPage={() => setPage((p) => Math.max(1, p - 1))}
           onNextPage={() => setPage((p) => Math.min(totalPages, p + 1))}
           onToggleRead={handleToggleRead}
@@ -248,7 +294,12 @@ const MindDiaryHome = () => {
       {mode === "detail" && selectedDiary && (
         <DiaryDetail
           diary={selectedDiary}
-          onBack={() => setMode("list")}
+          onBack={() => {
+            if (targetDiaryId) {
+              navigate("/mind-diary", { replace: true });
+            }
+            setMode("list");
+          }}
           onDelete={handleDeleteDiary}
           onRefresh={refreshDiary}   // 계속 디테일 페이지 리프레쉬 해주는 호출
           onMarkRead={handleToggleRead}
@@ -268,7 +319,7 @@ const MindDiaryHome = () => {
           onDone={() => setMode("list")}
         />
       )}
-    </>
+    </div>
   );
 };
 

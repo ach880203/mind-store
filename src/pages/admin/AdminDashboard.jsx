@@ -2,13 +2,12 @@
 import React, { useMemo } from "react";
 import "./AdminDashboard.css";
 
-import reservationsdb from "../../data/reservationsdb";
-import usersdb from "../../data/usersdb";
-import productsdb from "../../data/productsdb";
-import ordersdb from "../../data/ordersdb";
 import { useNavigate } from "react-router-dom";
+import { loadUsers } from "../../utils/userStore";
+import { loadOrders } from "../../utils/orderStore";
+import { loadReservations } from "./reservationStorage";
+import productsdb from "../../data/productsdb";
 
-const LS_USERS = "admin_users_v1";
 const LS_PRODUCTS = "admin_products_v1";
 
 const todayStr = new Date().toLocaleDateString("sv-SE");
@@ -24,27 +23,29 @@ const getLS = (key) => {
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const users = getLS(LS_USERS) ?? usersdb;
+  const users = loadUsers();
+  const orders = loadOrders();
+  const reservations = loadReservations();
   const products = getLS(LS_PRODUCTS) ?? productsdb;
 
   /* ===== 상단 KPI ===== */
-  const todayReservations = reservationsdb.filter(
+  const todayReservations = reservations.filter(
     (r) => r.date === todayStr).length;
 
   const sellingProducts = products.filter(
     (p) => p.status === "판매중"
   ).length;
 
-  const todayOrderAmount = ordersdb
+  const todayOrderAmount = orders
     .filter((o) => o.date.startsWith(todayStr))
     .reduce((sum, o) => sum + o.price, 0);
 
   /* ===== 예약 상태 ===== */
   const reservationStatus = useMemo(() => {
     const base = { 대기: 0, 확정: 0, 완료: 0, 취소: 0 };
-    reservationsdb.forEach((r) => base[r.status]++);
+    reservations.forEach((r) => base[r.status]++);
     return base;
-  }, []);
+  }, [reservations]);
 
   /* ===== 주문 상태 ===== */
   const orderStatus = useMemo(() => {
@@ -55,9 +56,9 @@ const AdminDashboard = () => {
       배송완료: 0,
       취소: 0,
     };
-    ordersdb.forEach((o) => base[o.status]++);
+    orders.forEach((o) => base[o.status]++);
     return base;
-  }, []);
+  }, [orders]);
 
   const maxOrderCount = Math.max(...Object.values(orderStatus), 1);
 
@@ -94,7 +95,7 @@ const AdminDashboard = () => {
         {Object.entries(reservationStatus).map(([k, v]) => (
           <div key={k} 
                 className={`dash-card status-card ${k}`}
-                onClick={() => navigate(`/admin/reservations?staus=${k}`)}
+                onClick={() => navigate(`/admin/reservations?status=${k}`)}
                 style={{cursor: "pointer"}}>
             <h3>{k}</h3>
             <strong>{v}</strong>

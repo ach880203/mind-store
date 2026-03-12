@@ -30,7 +30,7 @@ export const addComment = (diaryId, comment) => {
     d.id === diaryId
       ? { ...d, comments: [...d.comments, comment],
         isRead: false, //댓글 추가시 안읽음으로 전환
-        Highlight: true, // 새 댓글  등록하면 강조 알림
+        highlight: true, // 새 댓글 등록 후 목록에서 잠깐 강조합니다.
        }
       : d
 

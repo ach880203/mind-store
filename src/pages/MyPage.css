@@ -1,0 +1,145 @@
+.my-page .mypage-action {
+  border: none;
+  cursor: pointer;
+}
+
+.mypage-tab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.mypage-dropdown {
+  position: relative;
+  min-width: min(100%, 280px);
+}
+
+.mypage-dropdown-button {
+  width: 100%;
+  min-height: 62px;
+  padding: 0 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.06);
+  color: var(--text-main);
+  font-size: var(--text-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.mypage-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 18px;
+  background: rgba(16,16,16,0.94);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 24px 40px rgba(0,0,0,0.28);
+  z-index: 20;
+}
+
+.mypage-dropdown-item {
+  min-height: 54px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.06);
+  color: var(--text-main);
+  font-size: var(--text-xs);
+  text-align: left;
+  cursor: pointer;
+}
+
+.mypage-dropdown-item.active {
+  background: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.96);
+}
+
+.profile-card {
+  padding: clamp(24px, 4vw, 36px);
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.profile-field {
+  display: grid;
+  gap: 10px;
+  font-size: var(--text-xs);
+  color: var(--text-soft);
+}
+
+.profile-field span {
+  color: var(--text-main);
+}
+
+.profile-field input {
+  min-height: 60px;
+  padding: 0 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.06);
+  color: var(--text-main);
+  font-size: var(--text-sm);
+}
+
+.profile-field-wide {
+  grid-column: 1 / -1;
+}
+
+.readonly-field {
+  opacity: 0.75;
+}
+
+.profile-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 22px;
+  font-size: var(--text-xs);
+  color: var(--text-soft);
+}
+
+.profile-message {
+  margin: 16px 0 0;
+  font-size: var(--text-xs);
+}
+
+.profile-message.success {
+  color: rgba(255,255,255,0.78);
+}
+
+.profile-message.error {
+  color: #ad4343;
+}
+
+.diary-snippet {
+  display: block;
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: normal;
+}
+
+.clickable-record {
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}

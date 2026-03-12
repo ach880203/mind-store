@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { addComment } from "./diaryStorage";
 import "./MindDiary.detail.css";
 import usersdb from "../../data/usersdb";
+import { getCurrentUser } from "../../utils/auth";
 
 /**
  * DiaryDetail
@@ -10,7 +11,10 @@ import usersdb from "../../data/usersdb";
  */
 const DiaryDetail = ({ diary, onBack, onDelete, onRefresh, onMarkRead}) => {
   const [text, setText] = useState("");
-  const [role, setRole] = useState("user"); // user | admin
+  const me = getCurrentUser();
+  const isAdminViewer = Number(me?.admin) === 1;
+  const isOwner = me?.user_id && diary.userId === me.user_id;
+  const role = isAdminViewer ? "admin" : "user"; // user | admin
   const author = usersdb.find(
     (u) => u.user_id === diary.userId
   );
@@ -65,8 +69,13 @@ const DiaryDetail = ({ diary, onBack, onDelete, onRefresh, onMarkRead}) => {
         <div className="diary-detail-title">
           <h2>일기 상세</h2>
           <span className="diary-author-name">
-            {author ? `${author.nick}` : "알 수 없음"}
+            {isAdminViewer
+              ? `작성자 ${author ? `${author.nick} (${author.user_id})` : "알 수 없음"}`
+              : isOwner
+                ? "내가 쓴 글"
+                : "익명"}
           </span>
+          {isOwner && !isAdminViewer && <span className="diary-owner-chip">내가 쓴 글</span>}
         </div>
 
         <p className="diary-date">
@@ -117,19 +126,17 @@ const DiaryDetail = ({ diary, onBack, onDelete, onRefresh, onMarkRead}) => {
             
             {/* 하단 입력창 고정 로직 */}
           <div className="comment-form" ref={inputWrapRef}>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-            >
-              <option value="user">나</option>
-              <option value="admin">관리자</option>
-            </select>
+            {isAdminViewer ? (
+              <div className="comment-role-badge">관리자 답장</div>
+            ) : (
+              <div className="comment-role-badge">내 답장</div>
+            )}
 
             <textarea
               ref={inputRef}
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="댓글을 입력하세요"
+              placeholder={isAdminViewer ? "일기에 남길 답장을 입력하세요" : "추가로 남기고 싶은 말을 적어주세요"}
               rows={1}  //처음은 한 줄
               style={{ resize: "none", overfrlow: "hidden"}} //드래그 막기, 스크롤바 숨기기
             />

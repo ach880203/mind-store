@@ -3,6 +3,12 @@
    ================================ */
 
 /* 공통 레이아웃 */
+.mind-diary-shell {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: calc(var(--header-height) + 28px) var(--page-padding) 72px;
+}
+
 .mind-diary {
   --blur-strong: blur(18px);
   --blur-soft: blur(10px);
@@ -25,22 +31,22 @@
    버튼
    ================================ */
 .diary-btn {
-  padding: 12px 30px;
+  padding: 11px 24px;
   border-radius: 999px;
-  border: none;
+  border: 1px solid rgba(255,255,255,0.14);
   font-weight: 600;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
 
-  background: #fff;
-  color: #000;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.92);
 
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .diary-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.24);
 }
 
 .diary-btn:active {
@@ -61,10 +67,11 @@
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
   z-index: 1100;
-
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  padding: calc(var(--header-height) + 20px) 20px 24px;
+  box-sizing: border-box;
 }
 
 .diary-modal {
