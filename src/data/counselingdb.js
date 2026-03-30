@@ -2,28 +2,30 @@ const counselingdb = [
   {
     id: 1,
     title: "마음 상담",
-    description: "전문 상담사와 1:1 심층 상담",
+    description: "전문 상담사와 1:1로 현재 마음 상태를 차분히 살펴보는 상담입니다.",
     price: 160000,
     duration: "2시간",
   },
   {
     id: 2,
     title: "감정 정리 상담",
-    description: "복잡한 마음을 차분하게 정리를 도와드립니다.",
+    description: "복잡한 감정을 정리하고 현재 상태를 이해할 수 있도록 돕는 상담입니다.",
     price: 160000,
     duration: "2시간",
   },
   {
     id: 3,
     title: "성격 유형 검사",
-    description: "검사 후 전문 상담사의 성격유형 상세 설명과 진로 추천 등...",
+    description:
+      "검사 결과를 바탕으로 성향을 해석하고 관계와 진로 방향을 함께 살펴봅니다.",
     price: 100000,
     duration: "2시간",
   },
   {
     id: 4,
     title: "가족 심리 상담",
-    description: "부부, 자녀, 부모의 마음을 이해하고 알아보세요.",
+    description:
+      "부부, 부모, 자녀 관계에서 생기는 감정의 흐름을 이해하고 대화를 정리합니다.",
     price: 250000,
     duration: "2시간",
   },
@@ -31,7 +33,7 @@ const counselingdb = [
     id: 5,
     title: "청소년 심리 상담",
     description:
-      "전문 상담사와 1:1 심층 상담으로 아이의 고민과 걱정과 문제를 알아보세요.",
+      "학업, 진로, 관계로 인한 고민과 불안을 상담사와 함께 차분히 정리합니다.",
     price: 160000,
     duration: "2시간",
   },

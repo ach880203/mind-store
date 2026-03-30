@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { findProduct } from "../utils/productStore";
-import "./UserPage.css";
+import { findProduct } from "../../../utils/productStore";
+import "../shared/UserPage.css";
 import "./ProductDetail.css";
 
 const priceFormatter = new Intl.NumberFormat("ko-KR");
@@ -24,6 +24,9 @@ const ProductDetail = () => {
       <div className="user-page product-detail-page">
         <div className="empty-state">
           <h2 className="empty-title">상품 정보를 찾을 수 없습니다.</h2>
+          <p className="empty-description">
+            상품이 삭제되었거나 이동한 뒤 다시 들어온 경우일 수 있습니다. 상품 목록에서 다시 확인해 주세요.
+          </p>
           <div className="page-actions">
             <Link to={backTarget} className="primary-link">
               돌아가기

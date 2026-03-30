@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./UserPage.css";
+import "../shared/UserPage.css";
 import "./About.css";
 
 const serviceValues = [
@@ -60,9 +60,9 @@ const About = () => {
       <section className="user-hero page-surface">
         <div className="hero-copy">
           <span className="page-eyebrow">서비스 소개</span>
-          <h1 className="page-title">마음이 조금 덜 무겁게 느껴지는 화면을 목표로 했습니다.</h1>
+          <h1 className="page-title">마음을 내려놓고 마음을 다듬는 공간을 목표했습니다.</h1>
           <p className="page-description">
-            마음상점은 감정을 적고, 상담을 고르고, 필요한 도움을 확인하는 과정을 한곳에서 이어 보게 만든 프로젝트입니다.
+            마음상점은 익명으로 감정을 적고, 상담가의 위로와 응원의 댓글로 상다까지 이어질 수 있게 하고, 상담을 고르고, 필요한 도움을 확인하는 과정을 한곳에서 이어 보게 만든 프로젝트입니다.
             너무 닫힌 어두움보다는, 조용하지만 오래 머물 수 있는 분위기로 다듬었습니다.
           </p>
           <div className="page-actions">

@@ -8,7 +8,7 @@
   inset: 0;
   background:
     linear-gradient(180deg, rgba(13, 10, 8, 0.5) 0%, rgba(13, 10, 8, 0.2) 38%, rgba(13, 10, 8, 0.58) 100%),
-    url("../../public/img/background_6.png") center/cover no-repeat;
+    url("../../../assets/images/background_6.png") center/cover no-repeat;
   z-index: -3;
 }
 
@@ -43,6 +43,21 @@
   transform: translateY(-2vh);
 }
 
+.home-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 233, 198, 0.16);
+  background: rgba(255, 245, 224, 0.05);
+  color: rgba(255, 240, 214, 0.84);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+}
+
 .home-message {
   margin: 0;
   color: rgba(255, 244, 226, 0.96);
@@ -64,6 +79,16 @@
   line-height: 1.8;
   letter-spacing: -0.01em;
   text-shadow: 0 2px 14px rgba(7, 4, 3, 0.24);
+  word-break: keep-all;
+}
+
+.home-support {
+  margin: -6px 0 4px;
+  color: rgba(255, 240, 220, 0.72);
+  font-size: clamp(14px, 0.35vw + 12px, 16px);
+  line-height: 1.75;
+  max-width: 560px;
+  text-shadow: 0 2px 14px rgba(7, 4, 3, 0.22);
   word-break: keep-all;
 }
 
@@ -159,8 +184,18 @@
     line-height: 1.58;
   }
 
+  .home-eyebrow {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+
   .home-submessage {
     font-size: clamp(15px, 3.8vw, 18px);
+    line-height: 1.7;
+  }
+
+  .home-support {
+    font-size: 14px;
     line-height: 1.7;
   }
 }

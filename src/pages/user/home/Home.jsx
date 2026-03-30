@@ -1,13 +1,17 @@
 import "./Home.css";
 import { useEffect, useState } from "react";
-import DiaryWrite from "./mind-diary/DiaryWrite";
-import DiarySendResult from "./mind-diary/DiarySendResult";
-import ModalPortal from "../components/ModalPortal";
-import { saveDiary } from "./mind-diary/diaryStorage";
+import { useNavigate } from "react-router-dom";
+import DiaryWrite from "../../mind-diary/DiaryWrite";
+import DiarySendResult from "../../mind-diary/DiarySendResult";
+import ModalPortal from "../../../components/ModalPortal";
+import { saveDiary } from "../../mind-diary/diaryStorage";
+import { getCurrentUser } from "../../../utils/auth";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [openDiary, setOpenDiary] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [diaryNotice, setDiaryNotice] = useState("");
 
   /** ESC 키로 모달 닫기 */
   useEffect(() => {
@@ -42,15 +46,27 @@ const Home = () => {
   const closeAll = () => {
     setOpenDiary(false);
     setShowResult(false);
+    setDiaryNotice("");
   };
 
   /** 홈에서 바로 일기를 저장하고 완료 화면으로 넘깁니다. */
   const handleSubmitDiary = (data) => {
+    const currentUser = getCurrentUser();
+
+    if (!currentUser) {
+      // 홈에서 바로 일기를 쓰더라도 작성자는 현재 로그인 사용자와 정확히 연결되어야 합니다.
+      // 로그인 없이 저장하면 마이페이지와 소유자 연결이 틀어지므로 먼저 로그인으로 안내합니다.
+      setDiaryNotice("마음일기를 저장하려면 먼저 로그인해 주세요.");
+      navigate("/login");
+      return;
+    }
+
     saveDiary({
       ...data,
-      userId: "minji", // 임시 로그인 사용자
+      userId: currentUser.user_id,
     });
 
+    setDiaryNotice("");
     setShowResult(true);
   };
 
@@ -60,8 +76,10 @@ const Home = () => {
         {/* 기본 안내 카드 */}
         {!openDiary && (
           <section className="home-hero">
+            <span className="home-eyebrow">기록하고, 정리하고, 다시 돌아보는 마음 루틴</span>
             <h1 className="home-message">오늘 마음은 어땠나요?</h1>
             <p className="home-submessage">말로하기 어려운 마음을, 마음 일기장에 천천히 적어주세요.</p>
+            {diaryNotice && <p className="home-submessage">{diaryNotice}</p>}
             <button className="diary-btn" onClick={() => setOpenDiary(true)}>
               마음일기 쓰기
             </button>

@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCurrentUser } from "../utils/auth";
-import { addOrder, initOrders } from "../utils/orderStore";
-import { loadProducts } from "../utils/productStore";
-import "./UserPage.css";
+import { getCurrentUser } from "../../../utils/auth";
+import { addOrder, initOrders } from "../../../utils/orderStore";
+import { loadProducts, updateProductStock } from "../../../utils/productStore";
+import "../shared/UserPage.css";
 import "./Products.css";
 
 const priceFormatter = new Intl.NumberFormat("ko-KR");
@@ -13,11 +13,11 @@ const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState("전체");
   const [keyword, setKeyword] = useState("");
   const [notice, setNotice] = useState("");
-
-  const products = useMemo(() => loadProducts(), []);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     initOrders();
+    setProducts(loadProducts());
   }, []);
 
   const categories = useMemo(() => {
@@ -56,8 +56,17 @@ const Products = () => {
         quantity: 1,
         price: Number(product.price),
       });
-      setNotice(`'${product.name}' 주문이 저장되었습니다. 마이페이지에서 바로 확인할 수 있습니다.`);
-      window.alert("마이페이지 주문내역에서 확인 됩니다.");
+      const updatedProduct = updateProductStock(product.id, 1);
+      setProducts(loadProducts());
+
+      if (!updatedProduct) {
+        setNotice("주문은 저장되었지만 상품 재고 반영에 실패했습니다.");
+        return;
+      }
+
+      setNotice(
+        `'${product.name}' 주문이 저장되었습니다. 남은 재고는 ${updatedProduct.stock}개입니다.`
+      );
     } catch (error) {
       setNotice(error.message || "주문 저장 중 문제가 발생했습니다.");
     }

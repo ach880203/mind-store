@@ -15,6 +15,37 @@ export const loadProducts = () => {
   return productsdb;
 };
 
+export const saveProducts = (list) => {
+  const safeList = Array.isArray(list) ? list : [];
+  localStorage.setItem(PRODUCT_STORAGE_KEY, JSON.stringify(safeList));
+  return safeList;
+};
+
+export const updateProductStock = (productId, quantity = 1) => {
+  const parsedQuantity = Number(quantity) || 0;
+  const products = loadProducts();
+  let updatedProduct = null;
+
+  const nextProducts = products.map((product) => {
+    if (String(product.id) !== String(productId)) {
+      return product;
+    }
+
+    // 주문 후 재고가 화면에 바로 반영되어야 사용자 흐름이 자연스럽습니다.
+    const nextStock = Math.max(0, Number(product.stock || 0) - parsedQuantity);
+    updatedProduct = {
+      ...product,
+      stock: nextStock,
+      status: nextStock > 0 ? "판매중" : "품절",
+    };
+
+    return updatedProduct;
+  });
+
+  saveProducts(nextProducts);
+  return updatedProduct;
+};
+
 export const findProduct = ({ productId, productName }) => {
   const products = loadProducts();
 

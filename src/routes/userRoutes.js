@@ -1,16 +1,16 @@
 import { Navigate, Route } from "react-router-dom";
 import Layout from "../components/Layout";
 
-import Home from "../pages/Home";
-import Counseling from "../pages/Counseling";
-import Products from "../pages/Products";
-import ProductDetail from "../pages/ProductDetail";
-import About from "../pages/About";
+import Home from "../pages/user/home/Home";
+import Counseling from "../pages/user/counseling/Counseling";
+import Products from "../pages/user/products/Products";
+import ProductDetail from "../pages/user/products/ProductDetail";
+import About from "../pages/user/about/About";
 
 import MindDiaryHome from "../pages/mind-diary/MindDiaryHome";
 import Login from "../pages/auth/Login";
 import Signup from './../pages/auth/Signup';
-import MyPage from "../pages/MyPage";
+import MyPage from "../pages/user/mypage/MyPage";
 
 
 

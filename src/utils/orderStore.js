@@ -1,6 +1,6 @@
 import ordersdb from "../data/ordersdb";
-import usersdb from "../data/usersdb";
 import { getCurrentUser } from "./auth";
+import { loadUsers } from "./userStore";
 
 const ORDER_STORAGE_KEY = "admin_orders_v1";
 
@@ -16,7 +16,9 @@ const nowString = () => {
 };
 
 const normalizeOrder = (order) => {
-  const matchedUser = usersdb.find(
+  // 주문 표시 정보는 고정 더미 유저가 아니라 현재 저장된 회원 정보와 맞춰야
+  // 닉네임 수정이나 신규 가입 이후에도 마이페이지 연결이 덜 어색합니다.
+  const matchedUser = loadUsers().find(
     (user) =>
       user.user_id === order?.userId ||
       user.name === order?.user ||

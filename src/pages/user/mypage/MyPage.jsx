@@ -1,24 +1,24 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import counselingdb from "../data/counselingdb";
-import { getCurrentUser, setCurrentUser } from "../utils/auth";
+import counselingdb from "../../../data/counselingdb";
+import { getCurrentUser, setCurrentUser } from "../../../utils/auth";
 import {
   initUsers,
   isDuplicateNick,
   loadUsers,
   updateUser,
-} from "../utils/userStore";
+} from "../../../utils/userStore";
 import {
   initOrders,
   loadOrders,
-} from "../utils/orderStore";
-import { findProduct } from "../utils/productStore";
+} from "../../../utils/orderStore";
+import { findProduct } from "../../../utils/productStore";
 import {
   initReservations,
   loadReservations,
-} from "./admin/reservationStorage";
-import { loadDiaries } from "./mind-diary/diaryStorage";
-import "./UserPage.css";
+} from "../../admin/reservationStorage";
+import { loadDiaries } from "../../mind-diary/diaryStorage";
+import "../shared/UserPage.css";
 import "./MyPage.css";
 
 const TAB_ITEMS = [
@@ -36,6 +36,9 @@ const toReservationTime = (date, time = "00:00") =>
 
 const toOrderTime = (value) =>
   new Date(String(value || "").replace(" ", "T")).getTime();
+
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phonePattern = /^01[0-9]-?\d{3,4}-?\d{4}$/;
 
 const buildUserKeys = (user) => {
   const matchedUser = loadUsers().find((item) => item.user_id === user?.user_id);
@@ -185,6 +188,16 @@ const MyPage = () => {
       return;
     }
 
+    if (profileForm.email.trim() && !emailPattern.test(profileForm.email.trim())) {
+      setSaveError("이메일 형식을 다시 확인해 주세요.");
+      return;
+    }
+
+    if (profileForm.phone.trim() && !phonePattern.test(profileForm.phone.trim())) {
+      setSaveError("전화번호는 010-0000-0000 형식으로 입력해 주세요.");
+      return;
+    }
+
     const updatedUser = updateUser(me.user_id, {
       name: profileForm.name.trim(),
       nick: profileForm.nick.trim(),
@@ -293,6 +306,9 @@ const MyPage = () => {
             {reservations.length === 0 ? (
               <div className="empty-state">
                 <h3 className="empty-title">아직 예약한 상담이 없습니다.</h3>
+                <p className="empty-description">
+                  원하는 상담 상품을 먼저 살펴보고, 날짜와 시간을 고르면 예약 내역이 이곳에 차곡차곡 쌓입니다.
+                </p>
                 <div className="page-actions">
                   <Link to="/counseling" className="primary-link">
                     상담 보러가기
@@ -347,6 +363,9 @@ const MyPage = () => {
             {orders.length === 0 ? (
               <div className="empty-state">
                 <h3 className="empty-title">아직 주문한 상품이 없습니다.</h3>
+                <p className="empty-description">
+                  마음을 정리하는 데 도움이 되는 소품을 주문하면, 상품 정보와 주문 상태를 여기서 다시 확인할 수 있습니다.
+                </p>
                 <div className="page-actions">
                   <Link to="/products" className="primary-link">
                     상품 보러가기
@@ -408,6 +427,9 @@ const MyPage = () => {
             {diaries.length === 0 ? (
               <div className="empty-state">
                 <h3 className="empty-title">아직 작성한 일기가 없습니다.</h3>
+                <p className="empty-description">
+                  하루의 감정이나 생각을 한 줄씩 남기면, 내가 쓴 마음일기가 시간순으로 정리되어 보입니다.
+                </p>
                 <div className="page-actions">
                   <Link to="/mind-diary" className="primary-link">
                     마음일기 보러가기

@@ -15,18 +15,13 @@ const DiarySendResult = ({ onDone }) => {
 
   return (
     <div className="diary-result">
-      <h2 className="diary-result-title">
-        마음이 잘 전해졌어요
-      </h2>
+      <h2 className="diary-result-title">마음을 전해주셔서 감사합니다.</h2>
 
       <p className="diary-result-desc">
         오늘의 기록이 조용히 저장되었습니다.
       </p>
 
-      <button
-        className="diary-btn result"
-        onClick={onDone}
-      >
+      <button className="diary-btn result" onClick={onDone}>
         마치기
       </button>
     </div>

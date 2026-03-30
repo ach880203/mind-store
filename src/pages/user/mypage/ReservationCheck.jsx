@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import counselingdb from "../data/counselingdb";
-import usersdb from "../data/usersdb";
-import { getCurrentUser } from "../utils/auth";
-import { loadReservations } from "../pages/admin/reservationStorage";
-import "./UserPage.css";
+import counselingdb from "../../../data/counselingdb";
+import usersdb from "../../../data/usersdb";
+import { getCurrentUser } from "../../../utils/auth";
+import { loadReservations } from "../../admin/reservationStorage";
+import "../shared/UserPage.css";
 import "./ReservationCheck.css";
 
 const buildUserKeys = (user) => {

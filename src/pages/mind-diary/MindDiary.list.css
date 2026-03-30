@@ -143,6 +143,17 @@
   color: rgba(255,255,255,0.6);
 }
 
+.diary-inline-notice {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.88);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
 .diary-card.pulse {
   animation: unreadPulse 0.8s ease-out 1;
 }

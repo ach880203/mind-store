@@ -8,6 +8,9 @@ import {
 } from "../../utils/userStore";
 import "./Signup.css";
 
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phonePattern = /^01[0-9]-?\d{3,4}-?\d{4}$/;
+
 const Signup = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -54,6 +57,24 @@ const Signup = () => {
 
     if (form.user_pw !== form.confirm_pw) {
       setFeedback("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+      setFeedbackType("error");
+      return;
+    }
+
+    if (form.user_pw.length < 4) {
+      setFeedback("비밀번호는 4자 이상으로 입력해 주세요.");
+      setFeedbackType("error");
+      return;
+    }
+
+    if (!emailPattern.test(form.email.trim())) {
+      setFeedback("이메일 형식을 다시 확인해 주세요.");
+      setFeedbackType("error");
+      return;
+    }
+
+    if (!phonePattern.test(form.phone.trim())) {
+      setFeedback("전화번호는 010-0000-0000 형식으로 입력해 주세요.");
       setFeedbackType("error");
       return;
     }
@@ -108,6 +129,7 @@ const Signup = () => {
               name="user_id"
               value={form.user_id}
               onChange={handleChange}
+              autoComplete="username"
               placeholder="로그인에 사용할 아이디"
             />
           </label>
@@ -118,6 +140,7 @@ const Signup = () => {
               name="user_pw"
               value={form.user_pw}
               onChange={handleChange}
+              autoComplete="new-password"
               placeholder="비밀번호를 입력해 주세요"
             />
           </label>
@@ -128,6 +151,7 @@ const Signup = () => {
               name="confirm_pw"
               value={form.confirm_pw}
               onChange={handleChange}
+              autoComplete="new-password"
               placeholder="비밀번호를 다시 입력해 주세요"
             />
           </label>

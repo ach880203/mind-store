@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import counselingdb from "../data/counselingdb";
+import counselingdb from "../../../data/counselingdb";
 import "./Counseling.css"
 import { AnimatePresence, motion } from "framer-motion"
 import CounselingDetail from "./CounselingDetail";

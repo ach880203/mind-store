@@ -16,7 +16,14 @@ const Login = () => {
   }, []);
 
   const handleLogin = () => {
-    const user = findUserByCredentials(userId.trim(), pw);
+    const trimmedUserId = userId.trim();
+
+    if (!trimmedUserId || !pw.trim()) {
+      setError("아이디와 비밀번호를 모두 입력해 주세요.");
+      return;
+    }
+
+    const user = findUserByCredentials(trimmedUserId, pw);
 
     if (!user) {
       setError("아이디 또는 비밀번호가 올바르지 않습니다.");
@@ -40,6 +47,7 @@ const Login = () => {
             setUserId(e.target.value);
             setError("");
           }}
+          autoComplete="username"
           placeholder="아이디"
         />
 
@@ -51,12 +59,13 @@ const Login = () => {
             setPw(e.target.value);
             setError("");
           }}
+          autoComplete="current-password"
           placeholder="비밀번호"
         />
 
         {error && <p className="login-error">{error}</p>}
 
-        <button className="login-btn" onClick={handleLogin}>
+        <button type="button" className="login-btn" onClick={handleLogin}>
           로그인
         </button>
 

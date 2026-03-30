@@ -38,6 +38,19 @@ export const addReservation = (data) => {
   if (!user) throw new Error("로그인이 필요합니다.");
 
   const prev = loadReservations();
+  const hasDuplicateReservation = prev.some(
+    (reservation) =>
+      reservation.counselingId === data.counselingId &&
+      reservation.date === data.date &&
+      reservation.time === data.time &&
+      reservation.status !== "취소"
+  );
+
+  // 예약 프로젝트라도 같은 시간대를 중복으로 받아버리면 너무 데모처럼 보입니다.
+  // 최소한의 슬롯 중복 체크를 넣어 예약 흐름이 자연스럽게 이어지도록 합니다.
+  if (hasDuplicateReservation) {
+    throw new Error("선택한 날짜와 시간은 이미 예약이 완료되었습니다.");
+  }
 
   const reservation = {
     id: Date.now(),
@@ -51,6 +64,16 @@ export const addReservation = (data) => {
   const next = [reservation, ...prev];
   saveReservations(next);
   return reservation;
+};
+
+export const isReservationTaken = ({ counselingId, date, time }) => {
+  return loadReservations().some(
+    (reservation) =>
+      reservation.counselingId === counselingId &&
+      reservation.date === date &&
+      reservation.time === time &&
+      reservation.status !== "취소"
+  );
 };
 
 /* --------------------------------

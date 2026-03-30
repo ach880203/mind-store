@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import ordersdb from "../data/ordersdb";
-import usersdb from "../data/usersdb";
-import { getCurrentUser } from "../utils/auth";
-import "./UserPage.css";
+import ordersdb from "../../../data/ordersdb";
+import usersdb from "../../../data/usersdb";
+import { getCurrentUser } from "../../../utils/auth";
+import "../shared/UserPage.css";
 import "./OrdersCheck.css";
 
 const ORDER_STORAGE_KEY = "admin_orders_v1";
